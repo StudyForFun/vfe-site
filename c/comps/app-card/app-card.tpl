@@ -1,0 +1,20 @@
+<r-template class="ui card">
+    <div class="content">
+      <img class="right floated mini ui image" src="/images/avatar/large/elliot.jpg">
+      <div class="header">
+        {name}
+      </div>
+      <div class="meta">
+        2015-10-31
+      </div>
+      <div class="description">
+        {desc}
+      </div>
+    </div>
+    <div class="extra content">
+      <div class="ui two buttons">
+        <div class="ui basic green button">设置</div>
+        <div class="ui basic red button">部署</div>
+      </div>
+    </div>
+</r-template>

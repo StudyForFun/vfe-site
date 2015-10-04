@@ -61,17 +61,7 @@ function build (options) {
 								name: meta.name || 'bundle',
 								entry: './views/index',
 								libs: [],
-								modulesDirectories: [COMPONENT_MODULES, 'node_modules'],
-								loaders: [{
-							    	test: /\.jsx$/,
-							     	loader: 'babel'
-							    }, {
-							    	test: /\.dom$/,
-							     	loader: 'babel'
-							    }],
-							    onRequest: function (f) {
-							    	if (/node_modules/.test(f.context)) return false
-							    }
+								modulesDirectories: [COMPONENT_MODULES]
 							})
 							.pipe(gulp.dest(release_dir))
 							.pipe(vfe.filter(function (file) {
