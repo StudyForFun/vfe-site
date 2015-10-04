@@ -1,7 +1,7 @@
 <r-template class="ui card">
     <div class="content">
-      <img class="right floated mini ui image" src="/images/avatar/large/elliot.jpg">
-      <div class="header">
+      <!-- <img class="right floated mini ui image" src="/images/avatar/large/elliot.jpg"> -->
+      <div style="text-align:right">
         {name}
       </div>
       <div class="meta">
@@ -14,7 +14,7 @@
     <div class="extra content">
       <div class="ui two buttons">
         <div class="ui basic green button">设置</div>
-        <div class="ui basic red button">部署</div>
+        <div class="ui basic blue button">部署</div>
       </div>
     </div>
 </r-template>

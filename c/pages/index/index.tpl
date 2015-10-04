@@ -3,14 +3,14 @@
         <div class="flb-box"
             style="margin: 20px;" 
         >
-            <button class="ui icon button blue basic">
+            <button class="ui icon button blue basic circular" style="margin-right: 20px;">
               <i class="add icon"></i>
             </button>
+            <div class="flb-p1"></div>
             <div r-component="c-search" 
                 r-data="{
                     placeholder: '搜索APP'
                 }"
-                class="flb-p1"
             ></div>
         </div>
         <div class="apps">
@@ -18,7 +18,7 @@
                 <div class="row">
                     <r-repeat items="{$value}">
                         <div class="card-con" r-style="{width: 100/4 + '%'}">
-                            <div r-component="c-appcard" style="width: 200px;" class="app"
+                            <div r-component="c-appcard" style="width: 220px;" class="app"
                                 r-data="{
                                     name: name;
                                     desc: desc
