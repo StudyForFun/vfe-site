@@ -1,5 +1,5 @@
 .p-index .apps {position: absolute;bottom: 0;left: 0;right: 0;margin: auto;overflow: auto;top: 78px;
-	background-color: #f0f0f0;}
+	background-color: #f0f0f0;border-bottom-left-radius: 8px;border-bottom-right-radius: 8px;}
 .p-index .apps .row {display: -webkit-box;margin: 30px 0;}
 .p-index .card-con {}
 .p-index .card-con .app {margin: auto;}

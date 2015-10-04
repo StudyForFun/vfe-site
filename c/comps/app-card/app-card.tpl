@@ -5,7 +5,7 @@
         {name}
       </div>
       <div class="meta">
-        2015-10-31
+        {fdate(time, 'YY-XMM-XDD hh:mm')}
       </div>
       <div class="description">
         {desc}
