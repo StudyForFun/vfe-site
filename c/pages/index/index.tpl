@@ -22,6 +22,7 @@
                         <div class="card-con" r-style="{width: 100/4 + '%'}">
                             <div r-component="c-appcard" style="width: 220px;" class="app"
                                 r-data="{
+                                    id: _id;
                                     name: name;
                                     desc: desc;
                                     time: _created_time;

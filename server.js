@@ -9,7 +9,7 @@ var app = express()
  *  static folder
  **/
 app.use(express.static(path.join(__dirname, 'release')))
-app.get('/p/:page', function (req, res) {
+app.get('/p/*', function (req, res) {
 	res.sendFile(path.join(__dirname, './release/index.html'))
 })
 
@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(bodyParser.json({type: 'text/plain'}))
 app.use(require('./server/api'))
+app.use(require('./server/workspace'))
 
 /**
  *  server and port

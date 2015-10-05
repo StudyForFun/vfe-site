@@ -13,8 +13,8 @@
     </div>
     <div class="extra content">
       <div class="ui two buttons">
-        <div class="ui basic green button">设置</div>
-        <div class="ui basic blue button">部署</div>
+        <a class="ui basic green button" href="{'/p/setting/' + id}">设置</a>
+        <a class="ui basic blue button" href="{'/p/deploy/' + id}">部署</a>
       </div>
     </div>
 </r-template>

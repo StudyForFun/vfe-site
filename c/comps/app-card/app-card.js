@@ -6,6 +6,7 @@ module.exports = Zect.component('c-appcard', {
 	template: require('./app-card.tpl'),
 	data: function () {
 		return {
+			id: '',
 			name: '',
 			desc: '',
 			time: 0
