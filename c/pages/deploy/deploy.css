@@ -1,2 +1,3 @@
-.p-deploy .buttons {margin: 20px;}
-.p-deploy .table-con {margin: 10px 20px;}
+.p-deploy .operations {margin: 20px;}
+.p-deploy .operations .buttons {margin-right: 15px;}
+.p-deploy .table-con {margin: 10px 20px;position: absolute;bottom: 0;left: 0;right: 0;overflow: auto;top: 78px;}

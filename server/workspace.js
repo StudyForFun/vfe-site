@@ -43,6 +43,17 @@ router.get('/ws/:app_id', function (req, res) {
 		})
 	})
 })
+router.post('/ws/:app_id', function (req, res) {
+	var app_id = req.params.app_id
+	var p = req.body.path || './'
+	var filename = req.body.filename
 
+	if (/\.\./.test(p) || /\.\./.test(app_id)) return req.json(resp('Unvalid path or app_id.', null, 5101))
+	var dir = path.join(root, app_id, p, filename)
+	mkdirp(dir, function (err) {
+		if (err) return res.json(resp(err))
+		res.json(resp(null, {}))
+	})
+})
 
 module.exports = router

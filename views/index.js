@@ -1,6 +1,7 @@
 'use strict';
 
 require('./index.css')
+require('./lib/dropzone.css')
 
 Zect.create = Zect.extend
 Zect.namespace('r')

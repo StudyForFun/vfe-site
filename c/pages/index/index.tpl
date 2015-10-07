@@ -8,6 +8,11 @@
             >
               <i class="add icon"></i>
             </button>
+            <button class="ui icon button blue basic circular" style="margin-right: 20px;"
+                r-on="{click: onShowCreate}"
+            >
+              <i class="pagelines icon"></i>
+            </button>
             <div class="flb-p1"></div>
             <div r-component="c-search" 
                 r-data="{

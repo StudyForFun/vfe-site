@@ -1,25 +1,39 @@
 'use strict';
 
 var fdate = require('libs/date')
+require('comps/upload')
 
 module.exports = Zect.create({
 	template: require('./deploy.tpl'),
 	data: function () {
 		return {
 			files: [],
-			pathes: []
+			pathes: [],
+			dir_name: ''
 		}
 	},
 	created: function () {
 		this.$data.app_id = location.pathname.match(/^\/p\/deploy\/([^\\]+)/)[1]
 	},
 	ready: function () {
+		this.$comps = {}
+		this.$comps.createDir = $(this.$el).find('.ui.modal.createdir')
+			.modal('setting', 'transition', 'horizontal flip')
+
+		this.$comps.upload = $(this.$el).find('.ui.modal.upload')
+			.modal('setting', 'transition', 'horizontal flip')
+			.modal({
+				onHide: function () {
+					this.onHideUpload()
+				}.bind(this)
+			})
+
 		this.fetch()
 	},
 	methods: {
 		fetch: function () {
 			$.ajax({
-				url: ['/ws', this.$data.app_id].join('/'),
+				url: '/ws/' + this.$data.app_id,
 				data: {
 					path: encodeURIComponent(this.$data.pathes.length ? '/' + this.$data.pathes.join('/') : '')
 				},
@@ -59,6 +73,37 @@ module.exports = Zect.create({
 			
 			this.$data.pathes = this.$data.pathes.slice(0, index + 1)
 			this.fetch()
+		},
+		onShowCreate: function () {
+			this.$comps.createDir.modal('show')
+		},
+		onHideCreate: function () {
+			this.$comps.createDir.modal('hide')
+		},
+		onCreate: function () {
+			if (!this.$data.dir_name) return
+
+			$.ajax({
+				url: '/ws/' + this.$data.app_id,
+				method: 'POST',
+				data: {
+					path: this.$data.pathes.join('/'),
+					filename: this.$data.dir_name
+				},
+				success: function (data) {
+					this.fetch()
+					this.$comps.createDir.modal('hide')
+				}.bind(this)
+			})
+		},
+		onShowUpload: function () {
+			this.$comps.upload.modal('show')
+		},
+		onUploadDone: function () {
+			this.fetch()
+		},
+		onHideUpload: function () {
+			this.$refs.upload.clean()
 		}
 	}
 })
