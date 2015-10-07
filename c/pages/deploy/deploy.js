@@ -113,6 +113,9 @@ module.exports = Zect.create({
 		},
 		onHideUpload: function () {
 			this.$refs.upload.clean()
+		},
+		onHome: function () {
+			location.href = '/'
 		}
 	}
 })

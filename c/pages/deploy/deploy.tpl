@@ -1,6 +1,11 @@
 <r-template class="p-deploy page">
     <div class="container">
     	<div class="operations">
+    		<button class="ui icon button blue basic circular" style="margin-right: 10px;"
+                r-on="{click: onHome}"
+            >
+              <i class="home icon"></i>
+            </button>
 	    	<div class="ui blue buttons">
 			  <button class="ui button" r-on="{click: onShowCreate}"><i class="plus icon"></i> 创建目录</button>
 			  <button class="ui button" r-on="{click: onShowUpload}"><i class="upload icon"></i> 上传</button>

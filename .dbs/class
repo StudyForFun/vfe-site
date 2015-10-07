@@ -1,4 +1,5 @@
 {"host":"10.123.9.9","port":"80","_app_id":"_global","_class":"agent","_created_time":1444230598434,"_updated_time":1444230598434,"_id":"46KaHLuGN7mRgXcy"}
+{"host":"localhost","port":"8777","_app_id":"_global","_class":"agent","_created_time":1444230840457,"_updated_time":1444230840457,"_id":"RG5Lf2vJ9flnHMNI"}
 {"host":"10.123.9.9","port":"8999","_app_id":"_global","_class":"agent","_created_time":1444230650543,"_updated_time":1444230650543,"_id":"UtLgFtU0pgjY4Gdf"}
 {"host":"10.123.9.9:8999","path":"/data","_app_id":"_global","_class":"path","_created_time":1444230670343,"_updated_time":1444230670343,"_id":"XJokqxokMu3hgW7O"}
 {"host":"10.123.14.14","port":"80","_app_id":"_global","_class":"agent","_created_time":1444230552953,"_updated_time":1444230552953,"_id":"XaIQfFWSG1Sbm29v"}
