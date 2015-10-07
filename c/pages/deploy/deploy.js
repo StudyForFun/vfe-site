@@ -56,6 +56,15 @@ module.exports = Zect.create({
 			})
 		},
 		fdate: fdate,
+		fsize: function (size) {
+			if (size < 1024) {
+				return  '<span style="color: #777">' + size + ' Byte</span>'
+			} else if (size < 1024*1024){
+				return '<span style="color: yellowgreen">' + Math.round(size/1024) + ' KB</span>'
+			} else {
+				return '<span style="color: blue">' + Math.round(size/1024/1024) + ' MB</span>'
+			}
+		},
 		onRoot: function () {
 			this.$data.pathes = []
 			this.fetch()

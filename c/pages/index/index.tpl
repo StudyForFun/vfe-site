@@ -9,7 +9,12 @@
               <i class="add icon"></i>
             </button>
             <button class="ui icon button blue basic circular" style="margin-right: 20px;"
-                r-on="{click: onShowCreate}"
+                r-on="{click: onShowAddAgent}"
+            >
+              <i class="sitemap icon"></i>
+            </button>
+            <button class="ui icon button blue basic circular" style="margin-right: 20px;"
+                r-on="{click: onShowAddPath}"
             >
               <i class="pagelines icon"></i>
             </button>
@@ -39,7 +44,7 @@
             </r-repeat>
         </div>
     </div>
-    <div class="ui small modal">
+    <div class="ui small modal createapp">
       <div class="header">新建项目</div>
       <div class="content">
             <div class="ui form">
@@ -68,6 +73,74 @@
                     style="margin:0;display:block" 
                     r-on="{click: onCreate}"
                 >创建</button>
+              </div>  
+            </div>
+      </div>
+    </div>
+    <div class="ui small modal addagent">
+      <div class="header">新增服务器</div>
+      <div class="content">
+            <div class="ui form">
+              <div class="field">
+                <input type="text" name="first-name" placeholder="Host"
+                    r-model="agent_host"
+                />
+              </div>
+              <div class="field">
+                <input type="text" name="last-name" placeholder="Port"
+                    r-model="agent_port"
+                />
+              </div>
+              <div class="flb-box">
+                <button 
+                    type="submit"
+                    class="ui large button flb-p1" 
+                    style="margin-right: 20px;display:block" 
+                    r-on="{click: onHideAddAgent}"
+                >取消</button>
+                <button 
+                    type="submit"
+                    class="ui large primary button flb-p1" 
+                    style="margin:0;display:block" 
+                    r-on="{click: onAddAgent}"
+                >确定</button>
+              </div>  
+            </div>
+      </div>
+    </div>
+    <div class="ui small modal addpath">
+      <div class="header">发布路径</div>
+      <div class="content">
+            <div class="ui form">
+              <div class="field">
+                <label>服务器</label>
+                <div r-component="c-selection"
+                    r-ref="agentSelection"
+                    r-data="{
+                        name: '选择服务器';
+                        agents: agents;
+                    }"
+                ></div>
+              </div>
+              <div class="field">
+                <label>路径</label>
+                <input type="text" name="last-name" placeholder="绝对路径"
+                    r-model="path"
+                />
+              </div>
+              <div class="flb-box">
+                <button 
+                    type="submit"
+                    class="ui large button flb-p1" 
+                    style="margin-right: 20px;display:block" 
+                    r-on="{click: onHideAddPath}"
+                >取消</button>
+                <button 
+                    type="submit"
+                    class="ui large primary button flb-p1" 
+                    style="margin:0;display:block" 
+                    r-on="{click: onAddPath}"
+                >添加</button>
               </div>  
             </div>
       </div>

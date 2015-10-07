@@ -3,12 +3,16 @@
     	<div class="operations">
 	    	<div class="ui blue buttons">
 			  <button class="ui button" r-on="{click: onShowCreate}"><i class="plus icon"></i> 创建目录</button>
-			  <button class="ui button"><i class="cut icon"></i> 移动</button>
 			  <button class="ui button" r-on="{click: onShowUpload}"><i class="upload icon"></i> 上传</button>
 			</div>
 			<div class="ui buttons">
 	     		<button class="ui button blue"><i class="connectdevelop icon"></i> 部署</button>
 			</div>
+	     	<div class="ui buttons">
+	     		<button class="ui button"><i class="check circle outline icon"></i> 全选</button>
+			    <button class="ui button"><i class="cut icon"></i> 移动</button>
+	     		<button class="ui button"><i class="trash icon"></i> 删除</button>
+	     	</div>
 	     	<div class="ui buttons">
 	     		<button class="ui button"><i class="pagelines icon"></i> 创建映射</button>
 	     	</div>
@@ -18,7 +22,7 @@
 	    	<table class="ui celled striped table">
 			  <thead>
 			    <tr>
-				    <th colspan="3">
+				    <th colspan="4">
 					    <div class="ui breadcrumb">
 						  <a class="section" href="javascript:;" r-on="{click: onRoot}"><i class="icon windows"></i></a>
 						  <div class="divider"> / </div>
@@ -70,6 +74,7 @@
 				        ></i> {file}
 			      	</a>
 			      </td>
+			      <td class="right aligned collapsing">{- fsize(size)}</td>
 			      <td class="right aligned collapsing">{fdate(update_time, 'YY/XMM/XDD hh:mm:ss')}</td>
 			    </tr>
 			  </tbody>

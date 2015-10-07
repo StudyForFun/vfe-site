@@ -36,7 +36,8 @@ router.get('/ws/:app_id', function (req, res) {
 				return {
 					file: file,
 					type: stat.isDirectory() ? 'dir' : 'file',
-					update_time: +stat.mtime
+					update_time: +stat.mtime,
+					size: stat.size
 				}
 			})
 			res.json(resp(null, files))
