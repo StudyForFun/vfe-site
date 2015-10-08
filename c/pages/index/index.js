@@ -15,7 +15,8 @@ module.exports = Zect.create({
 			agent_host: '',
 			agent_port: '',
 			path: '',
-			path_desc: ''
+			path_desc: '',
+			pathes: []
 		}
 	},
 	ready: function () {
@@ -27,16 +28,27 @@ module.exports = Zect.create({
 			.modal('setting', 'transition', 'vertical flip')
 
 		this.$comps.addPath = $(this.$el).find('.ui.modal.addpath')
-			.modal('setting', 'transition', 'browse')
+			.modal('setting', 'transition', 'vertical flip')
+
+		this.$comps.pathesMan = $(this.$el).find('.ui.modal.pathesman')
+			.modal('setting', 'transition', 'vertical flip')
 
 		this.fetch()
 		this.fetchAgents()
+		this.fetchPathes()
 	},
 	methods: {
 		fetch: function () {
 			$.get('/apps', function (data) {
 				if (!data.error) {
 					this.$data.apps = data.data
+				}
+			}.bind(this))
+		},
+		fetchPathes: function () {
+			$.get('/classes/path?_app_id=_global', function (data) {
+				if (!data.error) {
+					this.$data.pathes = data.data
 				}
 			}.bind(this))
 		},
@@ -115,10 +127,26 @@ module.exports = Zect.create({
 				method: 'POST',
 				data: {
 					host: this.$refs.agentSelection.val(),
-					path: this.$data.path
+					path: this.$data.path,
+					desc: this.$data.path_desc
 				},
-				success: function () {
+				success: function (data) {
+					this.$data.pathes.push(data.data)
 					this.$comps.addPath.modal('hide')
+				}.bind(this)
+			})
+		},
+		onShowPathes: function () {
+			this.$comps.pathesMan.modal('show')
+		},
+		onDeletePath: function (e) {
+			var id = e.currentTarget.dataset.id
+			$.ajax({
+				url: '/classes/path/' + id + '?_app_id=_global',
+				method: 'DELETE',
+				data: {},
+				success: function () {
+					this.fetchPathes()
 				}.bind(this)
 			})
 		}

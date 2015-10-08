@@ -18,6 +18,11 @@
             >
               <i class="pagelines icon"></i>
             </button>
+            <button class="ui icon button blue basic circular" style="margin-right: 20px;"
+                r-on="{click: onShowPathes}"
+            >
+              <i class="browser icon"></i>
+            </button>
             <div class="flb-p1"></div>
             <div r-component="c-search" 
                 r-data="{
@@ -148,6 +153,41 @@
                     r-on="{click: onAddPath}"
                 >添加</button>
               </div>  
+            </div>
+      </div>
+    </div>
+    <div class="ui small modal pathesman">
+      <div class="header">路径管理</div>
+      <div class="content">
+            <div class="p-index-table-con">
+              <table class="ui celled striped table">
+                <thead>
+                  <tr>
+                    <th colspan="4"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr r-repeat="{pathes}">
+                    <td class="collapsing">
+                      {host}
+                    </td>
+                    <td>
+                      <span style="color:green">{path}</span>
+                    </td>
+                    <td>
+                      <span style="color:green">{desc}</span>
+                    </td>
+                    <td class="right aligned collapsing">
+                      <a href="javascript:;" 
+                        data-id="{_id}"
+                        r-on="{click: onDeletePath}"
+                      >
+                        <i class="ui icon trash outline"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
       </div>
     </div>

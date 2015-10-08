@@ -19,7 +19,8 @@
 	     		<button class="ui button"><i class="trash icon"></i> 删除</button>
 	     	</div>
 	     	<div class="ui buttons">
-	     		<button class="ui button"><i class="pagelines icon"></i> 创建映射</button>
+	     		<button class="ui button" r-on="{click: onShowAddPath}"><i class="pagelines icon"></i> 创建映射</button>
+	     		<button class="ui button" r-on="{click: onShowPathes}"><i class="browser icon"></i> 管理映射</button>
 	     	</div>
 		  	<button class="ui icon circular basic button"><i class="repeat icon"></i></button>
     	</div>
@@ -141,6 +142,87 @@
 				onSuccess: onUploadDone
 			}"
 		></div>
+      </div>
+    </div>
+    <div class="ui small modal addpath">
+      <div class="header">发布路径</div>
+      <div class="content">
+            <div class="ui form">
+              <div class="field">
+                <label>服务器</label>
+                <div r-component="c-selection"
+                    r-ref="agentSelection"
+                    r-data="{
+                        name: '选择服务器';
+                        agents: agents;
+                    }"
+                ></div>
+              </div>
+              <div class="field">
+                <label>路径</label>
+                <input type="text" name="last-name" placeholder="绝对路径"
+                    r-model="path"
+                />
+              </div>
+              <div class="field">
+                <label>描述</label>
+                <input type="text" name="last-name" placeholder="描述下该发布路径"
+                    r-model="path_desc"
+                />
+              </div>
+              <div class="flb-box">
+                <button 
+                    type="submit"
+                    class="ui large button flb-p1" 
+                    style="margin-right: 20px;display:block" 
+                    r-on="{click: onHideAddPath}"
+                >取消</button>
+                <button 
+                    type="submit"
+                    class="ui large primary button flb-p1" 
+                    style="margin:0;display:block" 
+                    r-on="{click: onAddPath}"
+                >添加</button>
+              </div>  
+            </div>
+      </div>
+    </div>
+    <div class="ui small modal pathesman">
+      <div class="header">路径管理</div>
+      <div class="content">
+            <div class="p-deploy-table-con">
+              <table class="ui celled striped table">
+                <thead>
+                  <tr>
+                    <th>服务器</th>
+                    <th>发布路径</th>
+                    <th>描述</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr r-repeat="{releasePathes}">
+                    <td class="collapsing">
+                      {host}
+                    </td>
+                    <td>
+                      <span style="color:green">{path}</span>
+                    </td>
+                    <td>
+                      <span style="color:green">{desc}</span>
+                    </td>
+                    <td class="right aligned collapsing">
+                      <a href="javascript:;" 
+                        data-id="{_id}"
+                        r-on="{click: onDeletePath}"
+                      >
+                        <i class="ui icon trash outline"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
       </div>
     </div>
 </r-template>

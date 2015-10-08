@@ -2,6 +2,7 @@
 
 var fdate = require('libs/date')
 require('comps/upload')
+require('comps/selection')
 
 module.exports = Zect.create({
 	template: require('./deploy.tpl'),
@@ -9,6 +10,10 @@ module.exports = Zect.create({
 		return {
 			files: [],
 			pathes: [],
+			agents: [],
+			releasePathes: [],
+			path: '',
+			path_desc: '',
 			dir_name: ''
 		}
 	},
@@ -28,7 +33,15 @@ module.exports = Zect.create({
 				}.bind(this)
 			})
 
+		this.$comps.addPath = $(this.$el).find('.ui.modal.addpath')
+			.modal('setting', 'transition', 'vertical flip')
+
+		this.$comps.pathesMan = $(this.$el).find('.ui.modal.pathesman')
+			.modal('setting', 'transition', 'vertical flip')
+
 		this.fetch()
+		this.fetchAgents()
+		this.fetchPathes()
 	},
 	methods: {
 		fetch: function () {
@@ -54,6 +67,20 @@ module.exports = Zect.create({
 					}
 				}.bind(this)
 			})
+		},
+		fetchPathes: function () {
+			$.get('/classes/path?_app_id=' + this.$data.app_id, function (data) {
+				if (!data.error) {
+					this.$data.releasePathes = data.data
+				}
+			}.bind(this))
+		},
+		fetchAgents: function () {
+			$.get('/classes/agent?_app_id=_global', function (data) {
+				if (!data.error) {
+					this.$data.agents = data.data
+				}
+			}.bind(this))
 		},
 		fdate: fdate,
 		fsize: function (size) {
@@ -142,6 +169,43 @@ module.exports = Zect.create({
 				},
 				success: function () {
 					this.fetch()
+				}.bind(this)
+			})
+		},
+		onShowAddPath: function () {
+			this.$comps.addPath.modal('show')
+		},
+		onHideAddPath: function () {
+			this.$comps.addPath.modal('hide')
+		},
+		onAddPath: function () {
+			if (!this.$data.path) return
+
+			$.ajax({
+				url: '/classes/path?_app_id=' + this.$data.app_id,
+				method: 'POST',
+				data: {
+					host: this.$refs.agentSelection.val(),
+					path: this.$data.path,
+					desc: this.$data.path_desc
+				},
+				success: function (data) {
+					this.$data.releasePathes.push(data.data)
+					this.$comps.addPath.modal('hide')
+				}.bind(this)
+			})
+		},
+		onShowPathes: function () {
+			this.$comps.pathesMan.modal('show')
+		},
+		onDeletePath: function (e) {
+			var id = e.currentTarget.dataset.id
+			$.ajax({
+				url: '/classes/path/' + id + '?_app_id=' + this.$data.app_id,
+				method: 'DELETE',
+				data: {},
+				success: function () {
+					this.fetchPathes()
 				}.bind(this)
 			})
 		}
