@@ -19,6 +19,7 @@ app.use(bodyParser.json({type: 'text/plain'}))
 app.use(require('./server/api'))
 app.use(require('./server/workspace'))
 app.use(require('./server/upload'))
+app.use(require('./server/deploy'))
 
 /**
  *  server and port

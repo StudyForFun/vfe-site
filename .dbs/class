@@ -2,7 +2,6 @@
 {"host":"10.123.9.9","port":"80","_app_id":"_global","_class":"agent","_created_time":1444230598434,"_updated_time":1444230598434,"_id":"46KaHLuGN7mRgXcy"}
 {"host":"10.123.9.9:80","path":"/abc","desc":"123456","_app_id":"_global","_class":"path","_created_time":1444293634124,"_updated_time":1444293634124,"_id":"6Gf7HGb7NMyZHtEs"}
 {"host":"localhost:8777","path":"/user","desc":"abc","_app_id":"_global","_class":"path","_created_time":1444293214319,"_updated_time":1444293214319,"_id":"B79ncxHleIcE9FLQ"}
-{"host":"10.123.9.9:80","path":"/abc","desc":"123","_app_id":"_global","_class":"path","_created_time":1444293620017,"_updated_time":1444293620017,"_id":"BkJWaMsY0xaIBm5T"}
 {"host":"10.123.9.9:80","path":"/abc","desc":"12345678","_app_id":"_global","_class":"path","_created_time":1444293644191,"_updated_time":1444293644191,"_id":"GsfrhtNbmilmCK4u"}
 {"host":"localhost","port":"8777","_app_id":"_global","_class":"agent","_created_time":1444230840457,"_updated_time":1444230840457,"_id":"RG5Lf2vJ9flnHMNI"}
 {"host":"10.123.14.14:80","path":"/share","desc":"share","_app_id":"_global","_class":"path","_created_time":1444293260254,"_updated_time":1444293260254,"_id":"U0xD78jGWL82wSn2"}
@@ -17,6 +16,5 @@
 {"host":"10.123.9.9","port":"80","path":"/data/release/wap","_app_id":"_global","_class":"agent","_created_time":1444221329512,"_updated_time":1444221329512,"_id":"nhZVb2nOY0lRsuLW"}
 {"host":"10.123.9.9:80","path":"/abc","desc":"123456789","_app_id":"_global","_class":"path","_created_time":1444293647572,"_updated_time":1444293647572,"_id":"oEil7aGrdN8R2xUt"}
 {"host":"localhost:8777","path":"/user","desc":"user","_app_id":"5lkDF6aSI3SVgOx0","_class":"path","_created_time":1444295179689,"_updated_time":1444295179689,"_id":"pPOZyD1q9iKh9LTu"}
-{"host":"10.123.9.9:80","path":"/abc","desc":"1234","_app_id":"_global","_class":"path","_created_time":1444293628199,"_updated_time":1444293628199,"_id":"qivxTerbJUOGMPWT"}
 {"host":"10.123.14.14","port":"80","_app_id":"_global","_class":"agent","_created_time":1444230492976,"_updated_time":1444230492976,"_id":"u11HRU4dREzn7ERB"}
 {"$$indexCreated":{"fieldName":"_app_id","unique":false,"sparse":false}}

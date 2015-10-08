@@ -256,6 +256,25 @@ module.exports = Zect.create({
 					success: done.bind(this)
 				})
 			}.bind(this))
+		},
+		onShowDeploy: function () {
+
+			var files = this.$data.files.reduce(function (result, item) {
+				if (item.selected) result.push({
+					type: item.type,
+					file: item.file
+				})
+				return result
+			}, [])
+
+			$.ajax({
+				url: '/deploy/' + this.$data.app_id,
+				method: 'POST',
+				data: {
+					path: this.$data.pathes.join('/'),
+					files: JSON.stringify(files)
+				}
+			})
 		}
 	}
 })

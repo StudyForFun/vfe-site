@@ -11,7 +11,7 @@
 			  <button class="ui button" r-on="{click: onShowUpload}"><i class="upload icon"></i> 上传</button>
 			</div>
 			<div class="ui buttons">
-	     		<button class="ui button blue"><i class="connectdevelop icon"></i> 部署</button>
+	     		<button class="ui button blue" r-on="{click: onShowDeploy}"><i class="connectdevelop icon"></i> 部署</button>
 			</div>
 	     	<div class="ui buttons">
 	     		<button class="ui button" r-on="{click: onSelectAll}"><i class="check circle outline icon"></i> 全选</button>
@@ -64,7 +64,7 @@
 			    <tr r-repeat="{files}">
 			      <td class="collapsing filecheckbox">
 			      	<div class="ui checkbox fitted" r-on="{click: onSelect}" data-index="{$index}">
-					  <input type="checkbox" r-attr="{checked: selected ? 'checked' : undefined}">
+					  <input type="checkbox" r-model="{'files.' + $index + '.selected'}">
 					  <label></label>
 					</div>
 			      </td>

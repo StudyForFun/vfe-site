@@ -20,9 +20,7 @@ router.post('/upload/:app_id', multipart({
 		req.files.file.forEach(function (file) {
 			fs.renameSync(file.path, path.join(dir, file.name))
 		})
-		console.log(req.files)
 		res.send('ok')
-
 	})
 
 })
