@@ -18,7 +18,7 @@ function UUID(){
 mkdirp.sync(tmpDir)
 router.post('/deploy/:app_id', function (req, res) {
 
-	var archive = archiver.create('zip', {})
+	var archive = archiver.create('tar', {})
 	var files = JSON.parse(req.body.files)
 	var dir = decodeURIComponent(req.body.path || './')
 	dir = path.join(wsDir, req.params.app_id, dir)
@@ -27,22 +27,22 @@ router.post('/deploy/:app_id', function (req, res) {
 		if (f.type == 'dir') {
 			archive.directory(path.join(dir, f.file), f.file)
 		} else {
-			console.log(path.join(dir, f.file))
-			archive.file(path.join(dir, f.file))
+			archive.file(path.join(dir, f.file), {name: f.file})
 		}
 	})
 
-	var fp = path.join(tmpDir, UUID() + '.zip')
+	var fp = path.join(tmpDir, UUID() + '.tar')
 	archive.pipe(fs.createWriteStream(fp))
 		.on('finish', function () {
-				needle.post('/upload/test', {
+				needle.post('http://localhost:1024/dupload/test', {
   					'file[0]': {
 						file: fp,
-  						content_type: 'application/zip'
+  						content_type: 'application/tar'
   					}
-				}, { multipart: true })
-				.on('end', function () {
-					res.send('ok')
+				}, { multipart: true }, function (err) {
+					fs.unlink(fp, function () {
+						res.send('ok')
+					})
 				})
 		})
 	archive.finalize()
