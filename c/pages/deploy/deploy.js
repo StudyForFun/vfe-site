@@ -63,6 +63,9 @@ module.exports = Zect.create({
 								else if (a.update_time < b.update_time) return 1
 								else return 0
 							}
+						}).map(function (item) {
+							item.selected = false
+							return item
 						})
 					}
 				}.bind(this)
@@ -125,7 +128,7 @@ module.exports = Zect.create({
 				data: {
 					path: this.$data.pathes.join('/'),
 					filename: this.$data.dir_name,
-					type: dir
+					type: 'dir'
 				},
 				success: function (data) {
 					this.fetch()
@@ -208,6 +211,51 @@ module.exports = Zect.create({
 					this.fetchPathes()
 				}.bind(this)
 			})
+		},
+		onSelectAll: function () {
+			var selected = false
+			if (this.$data.files.some(function (item) {
+				return !item.selected
+			})) {
+				selected = true
+			}
+			this.$data.files.forEach(function (item) {
+				item.selected = selected
+			})
+			;[].slice.call(this.$el.querySelectorAll('.filecheckbox input')).forEach(function (e) {
+				e.checked = selected
+			})
+		},
+		onSelect: function (e) {
+			var index = e.currentTarget.dataset.index
+			this.$data.files[index].selected = !this.$data.files[index].selected
+		},
+		onDeleteFiles: function () {
+			if (!window.confirm('是否删除所选中文件？')) return
+
+			var count = 0
+			var hasDeleted = false
+			function done() {
+				count --
+				hasDeleted && !count && this.fetch()
+			}
+
+			this.$data.files.forEach(function (file) {
+				if (!file.selected) return
+				hasDeleted = true
+				count ++
+
+				$.ajax({
+					url: '/ws/' + this.$data.app_id,
+					method: 'DELETE',
+					data: {
+						path: this.$data.pathes.join('/'),
+						filename: file.file,
+						type: file.type
+					},
+					success: done.bind(this)
+				})
+			}.bind(this))
 		}
 	}
 })

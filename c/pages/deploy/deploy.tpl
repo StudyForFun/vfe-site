@@ -14,9 +14,9 @@
 	     		<button class="ui button blue"><i class="connectdevelop icon"></i> 部署</button>
 			</div>
 	     	<div class="ui buttons">
-	     		<button class="ui button"><i class="check circle outline icon"></i> 全选</button>
+	     		<button class="ui button" r-on="{click: onSelectAll}"><i class="check circle outline icon"></i> 全选</button>
 			    <button class="ui button"><i class="cut icon"></i> 移动</button>
-	     		<button class="ui button"><i class="trash icon"></i> 删除</button>
+	     		<button class="ui button" r-on="{click: onDeleteFiles}"><i class="trash icon"></i> 删除</button>
 	     	</div>
 	     	<div class="ui buttons">
 	     		<button class="ui button" r-on="{click: onShowAddPath}"><i class="pagelines icon"></i> 创建映射</button>
@@ -62,9 +62,9 @@
 		  			</td>
 			  	</tr>
 			    <tr r-repeat="{files}">
-			      <td class="collapsing">
-			      	<div class="ui checkbox fitted">
-					  <input type="checkbox">
+			      <td class="collapsing filecheckbox">
+			      	<div class="ui checkbox fitted" r-on="{click: onSelect}" data-index="{$index}">
+					  <input type="checkbox" r-attr="{checked: selected ? 'checked' : undefined}">
 					  <label></label>
 					</div>
 			      </td>
