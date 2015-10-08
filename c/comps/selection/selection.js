@@ -10,7 +10,9 @@ module.exports = Zect.component('c-selection', {
 		}
 	},
 	ready: function () {
-		var dd = this.dd = $(this.$el).find('.ui.dropdown').dropdown()
+		var dd = this.dd = $(this.$el).find('.ui.dropdown').dropdown({
+			showOnFocus: false
+		})
 	},
 	methods: {
 		refresh: function () {

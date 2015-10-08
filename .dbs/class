@@ -1,4 +1,6 @@
+{"host":"10.123.9.9","port":"8889","_app_id":"_global","_class":"agent","_created_time":1444271777505,"_updated_time":1444271777505,"_id":"1llL4zELwAkXkMaj"}
 {"host":"10.123.9.9","port":"80","_app_id":"_global","_class":"agent","_created_time":1444230598434,"_updated_time":1444230598434,"_id":"46KaHLuGN7mRgXcy"}
+{"host":"localhost:8777","path":"/user/local","_app_id":"_global","_class":"path","_created_time":1444270227264,"_updated_time":1444270227264,"_id":"J920Xw0TwxxMIhy3"}
 {"host":"localhost","port":"8777","_app_id":"_global","_class":"agent","_created_time":1444230840457,"_updated_time":1444230840457,"_id":"RG5Lf2vJ9flnHMNI"}
 {"host":"10.123.9.9","port":"8999","_app_id":"_global","_class":"agent","_created_time":1444230650543,"_updated_time":1444230650543,"_id":"UtLgFtU0pgjY4Gdf"}
 {"host":"10.123.9.9:8999","path":"/data","_app_id":"_global","_class":"path","_created_time":1444230670343,"_updated_time":1444230670343,"_id":"XJokqxokMu3hgW7O"}
@@ -8,5 +10,6 @@
 {"host":"10.123.14.14","port":"80","_app_id":"_global","_class":"agent","_created_time":1444230494361,"_updated_time":1444230494361,"_id":"detkpox7kGKrnY9J"}
 {"host":"10.123.9.9:80","path":"/data","_app_id":"_global","_class":"path","_created_time":1444230254944,"_updated_time":1444230254944,"_id":"lOGfrbTJtabD0eBa"}
 {"host":"10.123.9.9","port":"80","path":"/data/release/wap","_app_id":"_global","_class":"agent","_created_time":1444221329512,"_updated_time":1444221329512,"_id":"nhZVb2nOY0lRsuLW"}
+{"host":"10.123.9.9:80","path":"/data/release/wap","_app_id":"_global","_class":"path","_created_time":1444271565416,"_updated_time":1444271565416,"_id":"qzQmcRsNEkza5Elt"}
 {"host":"10.123.14.14","port":"80","_app_id":"_global","_class":"agent","_created_time":1444230492976,"_updated_time":1444230492976,"_id":"u11HRU4dREzn7ERB"}
 {"$$indexCreated":{"fieldName":"_app_id","unique":false,"sparse":false}}

@@ -128,6 +128,12 @@
                     r-model="path"
                 />
               </div>
+              <div class="field">
+                <label>描述</label>
+                <input type="text" name="last-name" placeholder="描述下该发布路径"
+                    r-model="path_desc"
+                />
+              </div>
               <div class="flb-box">
                 <button 
                     type="submit"

@@ -58,11 +58,11 @@ module.exports = Zect.create({
 		fdate: fdate,
 		fsize: function (size) {
 			if (size < 1024) {
-				return  '<span style="color: #777">' + size + ' Byte</span>'
+				return  '<span style="color: yellowgreen">' + size + ' Byte</span>'
 			} else if (size < 1024*1024){
 				return '<span style="color: yellowgreen">' + Math.round(size/1024) + ' KB</span>'
 			} else {
-				return '<span style="color: blue">' + Math.round(size/1024/1024) + ' MB</span>'
+				return '<span style="color: yellowgreen">' + Math.round(size/1024/1024) + ' MB</span>'
 			}
 		},
 		onRoot: function () {
@@ -97,7 +97,8 @@ module.exports = Zect.create({
 				method: 'POST',
 				data: {
 					path: this.$data.pathes.join('/'),
-					filename: this.$data.dir_name
+					filename: this.$data.dir_name,
+					type: dir
 				},
 				success: function (data) {
 					this.fetch()
@@ -116,6 +117,33 @@ module.exports = Zect.create({
 		},
 		onHome: function () {
 			location.href = '/'
+		},
+		onDeleteFile: function (e) {
+			var tar = e.currentTarget
+			var filename = tar.dataset.file
+			var type = tar.dataset.type
+
+			switch (type) {
+				case 'dir':
+					if (!window.confirm('确认删除目录: ' + filename + ' ?')) return
+					break
+				case 'file':
+					if (!window.confirm('确认删除文件: ' + filename + ' ?')) return
+					break
+			}
+
+			$.ajax({
+				url: '/ws/' + this.$data.app_id,
+				method: 'DELETE',
+				data: {
+					path: this.$data.pathes.join('/'),
+					filename: filename,
+					type: type
+				},
+				success: function () {
+					this.fetch()
+				}.bind(this)
+			})
 		}
 	}
 })

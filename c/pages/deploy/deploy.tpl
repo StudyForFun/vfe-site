@@ -27,7 +27,7 @@
 	    	<table class="ui celled striped table">
 			  <thead>
 			    <tr>
-				    <th colspan="4">
+				    <th colspan="5">
 					    <div class="ui breadcrumb">
 						  <a class="section" href="javascript:;" r-on="{click: onRoot}"><i class="icon windows"></i></a>
 						  <div class="divider"> / </div>
@@ -53,7 +53,12 @@
 			  </thead>
 			  <tbody>
 			  	<tr r-if="{!files.length}">
-		  			<td><i class="icon stack overflow"></i> This dir is empty~</td>
+		  			<td>
+		  				<p>
+		  					<i class="icon smile large"></i> 
+		  					This director is empty~
+		  				</p>
+		  			</td>
 			  	</tr>
 			    <tr r-repeat="{files}">
 			      <td class="collapsing">
@@ -81,6 +86,15 @@
 			      </td>
 			      <td class="right aligned collapsing">{- fsize(size)}</td>
 			      <td class="right aligned collapsing">{fdate(update_time, 'YY/XMM/XDD hh:mm:ss')}</td>
+			      <td class="right aligned collapsing">
+			      	<a href="javascript:;" 
+			      		data-file="{file}"
+			      		data-type="{type}"
+			      		r-on="{click: onDeleteFile}"
+			      	>
+			      		<i class="ui icon trash outline"></i>
+			      	</a>
+			      </td>
 			    </tr>
 			  </tbody>
 			</table>

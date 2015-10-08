@@ -14,7 +14,8 @@ module.exports = Zect.create({
 			agents: [],
 			agent_host: '',
 			agent_port: '',
-			path: ''
+			path: '',
+			path_desc: ''
 		}
 	},
 	ready: function () {
