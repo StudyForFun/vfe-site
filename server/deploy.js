@@ -38,7 +38,7 @@ router.post('/deploy/:app_id', function (req, res) {
 	console.log('Release to', 'http://' + releaseHost + '/?path=' + releaseDir)
 	archive.pipe(fs.createWriteStream(fp))
 		.on('finish', function () {
-				needle.post('http://' + releaseHost + '/?path=' + releaseDir, {
+				needle.post('http://' + releaseHost + '/?path=' + encodeURIComponent(releaseDir), {
   					'file[0]': {
 						file: fp,
   						content_type: 'application/tar'
