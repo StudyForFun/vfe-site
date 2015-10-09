@@ -86,15 +86,43 @@
       <div class="header">新增服务器</div>
       <div class="content">
             <div class="ui form">
-              <div class="field">
-                <input type="text" name="first-name" placeholder="Host"
-                    r-model="agent_host"
-                />
+              <label>服务地址与端口</label>
+              <div class="two fields">
+                <div class="field">
+                  <input type="text" name="first-name" placeholder="Host"
+                      r-model="agent_host"
+                  />
+                </div>
+                <div class="field">
+                  <input type="text" name="last-name" placeholder="Port"
+                      r-model="agent_port"
+                  />
+                </div>
               </div>
-              <div class="field">
-                <input type="text" name="last-name" placeholder="Port"
-                    r-model="agent_port"
-                />
+              <div class="p-index-table-con-agents">
+                <table class="ui celled striped table">
+                  <thead>
+                    <th colspan="3">地址列表</th>
+                  </thead>
+                  <tbody>
+                    <tr r-repeat="{agents}">
+                      <td>
+                        {host}
+                      </td>
+                      <td class="collapsing">
+                        <span style="color:green">{port}</span>
+                      </td>
+                      <td class="right aligned collapsing">
+                        <a href="javascript:;" 
+                          data-id="{_id}"
+                          r-on="{click: onDeleteAgent}"
+                        >
+                          <i class="ui icon trash outline"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
               <div class="flb-box">
                 <button 
@@ -159,36 +187,36 @@
     <div class="ui small modal pathesman">
       <div class="header">路径管理</div>
       <div class="content">
-            <div class="p-index-table-con">
-              <table class="ui celled striped table">
-                <thead>
-                  <tr>
-                    <th colspan="4"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr r-repeat="{pathes}">
-                    <td class="collapsing">
-                      {host}
-                    </td>
-                    <td>
-                      <span style="color:green">{path}</span>
-                    </td>
-                    <td>
-                      <span style="color:green">{desc}</span>
-                    </td>
-                    <td class="right aligned collapsing">
-                      <a href="javascript:;" 
-                        data-id="{_id}"
-                        r-on="{click: onDeletePath}"
-                      >
-                        <i class="ui icon trash outline"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+        <div class="p-index-table-con">
+          <table class="ui celled striped table">
+            <thead>
+              <tr>
+                <th colspan="4"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr r-repeat="{pathes}">
+                <td class="collapsing">
+                  {host}
+                </td>
+                <td>
+                  <span style="color:green">{path}</span>
+                </td>
+                <td>
+                  <span style="color:green">{desc}</span>
+                </td>
+                <td class="right aligned collapsing">
+                  <a href="javascript:;" 
+                    data-id="{_id}"
+                    r-on="{click: onDeletePath}"
+                  >
+                    <i class="ui icon trash outline"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 </r-template>

@@ -4,3 +4,4 @@
 .p-index .card-con {}
 .p-index .card-con .app {margin: auto;}
 .p-index-table-con {max-height: 400px;min-height: 100px;overflow: auto}
+.p-index-table-con-agents {max-height: 200px;min-height: 50px;overflow: auto;margin-bottom: 20px;}

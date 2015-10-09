@@ -2,28 +2,31 @@
     <div class="container">
     	<div class="operations">
     		<button class="ui icon button blue basic circular" style="margin-right: 10px;"
-                r-on="{click: onHome}"
-            >
-              <i class="home icon"></i>
-            </button>
+            r-on="{click: onHome}"
+        >
+          <i class="home icon"></i>
+        </button>
 	    	<div class="ui blue buttons">
 			  <button class="ui button" r-on="{click: onShowCreate}"><i class="plus icon"></i> 创建目录</button>
 			  <button class="ui button" r-on="{click: onShowUpload}"><i class="upload icon"></i> 上传</button>
 			</div>
 			<div class="ui buttons">
-	     		<button class="ui button blue" r-on="{click: onShowDeploy}"><i class="connectdevelop icon"></i> 部署</button>
+	     		<button class="ui button blue" 
+            r-class="{disabled: !hasSelected}"
+            r-on="{click: onShowDeploy}" 
+          ><i class="connectdevelop icon"></i> 部署</button>
 			</div>
 	     	<div class="ui buttons">
 	     		<button class="ui button" r-on="{click: onSelectAll}"><i class="check circle outline icon"></i> 全选</button>
-			    <button class="ui button"><i class="cut icon"></i> 移动</button>
+			    <!-- <button class="ui button"><i class="cut icon"></i> 移动</button> -->
 	     		<button class="ui button" r-on="{click: onDeleteFiles}"><i class="trash icon"></i> 删除</button>
 	     	</div>
 	     	<div class="ui buttons">
 	     		<button class="ui button" r-on="{click: onShowAddPath}"><i class="pagelines icon"></i> 创建映射</button>
 	     		<button class="ui button" r-on="{click: onShowPathes}"><i class="browser icon"></i> 管理映射</button>
 	     	</div>
-		  	<button class="ui icon circular basic button"><i class="repeat icon"></i></button>
-    	</div>
+		  	<button class="ui icon circular basic button" r-on="{click: onSync}"><i class="repeat icon"></i></button>
+  	</div>
 		<div class="table-con">
 	    	<table class="ui celled striped table">
 			  <thead>
@@ -197,7 +200,7 @@
                     <th>服务器</th>
                     <th>发布路径</th>
                     <th>描述</th>
-                    <th>操作</th>
+                    <th colspan="2"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -217,6 +220,13 @@
                         r-on="{click: onDeletePath}"
                       >
                         <i class="ui icon trash outline"></i>
+                      </a>
+                    </td>
+                    <td class="aligned collapsing">
+                      <a href="{'/p/remote?app_id=' + app_id + '&host=' + encodeURIComponent(host) + '&path=' + encodeURIComponent(path)}" 
+                        data-id="{_id}"
+                      >
+                        <i class="ui icon unhide"></i>
                       </a>
                     </td>
                   </tr>
@@ -240,18 +250,42 @@
                     }"
                 ></div>
           </div>
+          <label>发布文件</label>
+          <div class="p-deploy-table-con-deploy">
+            <table class="ui celled striped table">
+              <!-- <thead>
+                <th colspan="3">发布文件</th>
+              </thead> -->
+              <tbody>
+                <tr r-repeat="{selectedFiles}">
+                  <td>
+                    <i class="icon" 
+                      r-class="{
+                        folder: type == 'dir';
+                        file: type !== 'dir'; 
+                        outline: type !== 'dir'; 
+                      }"
+                    ></i> {file}
+                  </td>
+                  <td class="right aligned collapsing">{- fsize(size)}</td>
+                  <td class="right aligned collapsing">{fdate(update_time, 'YY/XMM/XDD hh:mm:ss')}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div class="flb-box">
               <button 
                   type="submit"
                   class="ui large button flb-p1" 
                   style="margin-right: 20px;display:block" 
                   r-on="{click: onHideDeploy}"
-              >取消</button>
+              >关闭</button>
               <button 
                   type="submit"
-                  class="ui large primary button flb-p1" 
+                  class="ui large primary button flb-p1"
                   style="margin:0;display:block" 
                   r-on="{click: onDeploy}"
+                  r-class="{loading: deploying}" 
               >发布</button>
             </div>  
       </div>

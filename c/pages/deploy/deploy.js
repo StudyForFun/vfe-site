@@ -14,7 +14,8 @@ module.exports = Zect.create({
 			releasePathes: [],
 			path: '',
 			path_desc: '',
-			dir_name: ''
+			dir_name: '',
+			deploying: false
 		}
 	},
 	created: function () {
@@ -46,8 +47,30 @@ module.exports = Zect.create({
 		this.fetchAgents()
 		this.fetchPathes()
 	},
+	computed: {
+		hasSelected: {
+			deps: ['files'],
+			get: function () {
+				return this.$data.files.some(function (item) {
+					return item.selected
+				})
+			}
+		},
+		selectedFiles: {
+			deps: ['files'],
+			get: function () {
+				return this.$data.files.reduce(function (result, item) {
+					if (item.selected) result.push(item)
+					return result
+				}, [])
+			}
+		}
+	},
 	methods: {
 		fetch: function () {
+			/**
+			 * fetch files
+			 */
 			$.ajax({
 				url: '/ws/' + this.$data.app_id,
 				data: {
@@ -87,6 +110,9 @@ module.exports = Zect.create({
 					this.$data.agents = data.data
 				}
 			}.bind(this))
+		},
+		onSync: function () {
+			this.fetch()
 		},
 		fdate: fdate,
 		fsize: function (size) {
@@ -274,6 +300,10 @@ module.exports = Zect.create({
 		},
 		onDeploy: function () {
 
+			if (this.$data.deploying) return
+
+			this.$data.deploying = true
+
 			var id = this.$refs.deploySelection.val()
 			var releasePath
 
@@ -293,6 +323,10 @@ module.exports = Zect.create({
 				return result
 			}, [])
 
+			if (!files.length) {
+				this.$data.deploying = false
+				return
+			}
 			$.ajax({
 				url: '/deploy/' + this.$data.app_id,
 				method: 'POST',
@@ -301,7 +335,10 @@ module.exports = Zect.create({
 					files: JSON.stringify(files),
 					release: releasePath.path,
 					host: releasePath.host
-				}
+				},
+				success: function () {
+					this.$data.deploying = false
+				}.bind(this)
 			})
 		}
 	}

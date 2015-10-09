@@ -1,14 +1,7 @@
-{"host":"10.123.9.9","port":"8889","_app_id":"_global","_class":"agent","_created_time":1444271777505,"_updated_time":1444271777505,"_id":"1llL4zELwAkXkMaj"}
 {"host":"10.123.9.9:8997","path":"/home/user_00/sendguan/vfe/vfe-agent/test","desc":"test release","_app_id":"_global","_class":"path","_created_time":1444360475354,"_updated_time":1444360475354,"_id":"2F2WyNZYRtzy8HFN"}
-{"host":"10.123.9.9","port":"80","_app_id":"_global","_class":"agent","_created_time":1444230598434,"_updated_time":1444230598434,"_id":"46KaHLuGN7mRgXcy"}
 {"host":"10.123.9.9","port":"8997","_app_id":"_global","_class":"agent","_created_time":1444360436242,"_updated_time":1444360436242,"_id":"DVrt5FmBSKiqq453"}
-{"host":"localhost","port":"8777","_app_id":"_global","_class":"agent","_created_time":1444230840457,"_updated_time":1444230840457,"_id":"RG5Lf2vJ9flnHMNI"}
-{"host":"10.123.9.9","port":"8999","_app_id":"_global","_class":"agent","_created_time":1444230650543,"_updated_time":1444230650543,"_id":"UtLgFtU0pgjY4Gdf"}
-{"host":"10.123.14.14","port":"80","_app_id":"_global","_class":"agent","_created_time":1444230552953,"_updated_time":1444230552953,"_id":"XaIQfFWSG1Sbm29v"}
 {"host":"10.123.9.9","paht":"/data/release/wap/htdocs","_id":"abcd","_class":"map","_app_id":"BSCpwlF5FlAAPxSw","_updated_time":1443962918147}
 {"host":"10.123.9.9","paht":"/data/release/wap/htdocs","_id":"abcd1","_class":"map","_app_id":"BSCpwlF5FlAAPxSw","_updated_time":1443963085897}
-{"host":"10.123.9.9:8997","path":"/home/user_00/sendguan/vfe/vfe-agent/test","desc":"Release test","_app_id":"5lkDF6aSI3SVgOx0","_class":"path","_created_time":1444360529534,"_updated_time":1444360529534,"_id":"btHu6lCclPyMPZsl"}
-{"host":"10.123.14.14","port":"80","_app_id":"_global","_class":"agent","_created_time":1444230494361,"_updated_time":1444230494361,"_id":"detkpox7kGKrnY9J"}
-{"host":"10.123.9.9","port":"80","path":"/data/release/wap","_app_id":"_global","_class":"agent","_created_time":1444221329512,"_updated_time":1444221329512,"_id":"nhZVb2nOY0lRsuLW"}
-{"host":"10.123.14.14","port":"80","_app_id":"_global","_class":"agent","_created_time":1444230492976,"_updated_time":1444230492976,"_id":"u11HRU4dREzn7ERB"}
+{"host":"10.123.14.14","port":"8997","_app_id":"_global","_class":"agent","_created_time":1444379387393,"_updated_time":1444379387393,"_id":"sZpFKEG6P7Sqfms6"}
+{"host":"10.123.9.9:8997","path":"/home/user_00/sendguan/vfe/vfe-agent/test","desc":"Release test","_app_id":"5lkDF6aSI3SVgOx0","_class":"path","_created_time":1444385406064,"_updated_time":1444385406064,"_id":"uggga0sKEn9saV0o"}
 {"$$indexCreated":{"fieldName":"_app_id","unique":false,"sparse":false}}

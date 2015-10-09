@@ -149,6 +149,17 @@ module.exports = Zect.create({
 					this.fetchPathes()
 				}.bind(this)
 			})
+		},
+		onDeleteAgent: function (e) {
+			var id = e.currentTarget.dataset.id
+			$.ajax({
+				url: '/classes/agent/' + id + '?_app_id=_global',
+				method: 'DELETE',
+				data: {},
+				success: function () {
+					this.fetchAgents()
+				}.bind(this)
+			})
 		}
 	}
 })
