@@ -11,19 +11,19 @@
     "gulp-inject": "^1.5.0",
     "gulp-watch": "^4.3.4",
     "vfe": "^1.2.0",
-    "webpack": "^1.12.2"
+    "webpack": "^1.10.5"
   },
   "dependencies": {
     "archiver": "^0.14.4",
-    "body-parser": "^1.14.1",
+    "body-parser": "^1.13.2",
     "connect-multiparty": "^2.0.0",
     "express": "^4.13.1",
     "mkdirp": "^0.5.1",
-    "nedb": "^1.2.1",
+    "nedb": "^1.1.2",
     "needle": "^0.10.0",
     "node-uuid": "^1.4.3",
     "rimraf": "^2.4.2",
-    "tar": "^2.2.1",
+    "tar": "^2.1.1",
     "unzip": "^0.1.11"
   }
 }

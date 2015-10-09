@@ -15,7 +15,7 @@ var release_dir = './release'
 var config = {
 	html: 'views/index.html',
 	source: ['views/**', COMPONENT_MODULES + '/**'],
-	js_cdn: 'http://host/path/to/js',
+	js_cdn: '',
 }
 
 
@@ -35,6 +35,10 @@ gulp.task('watch', function () {
 			next()
 		})
 	}))
+})
+gulp.task('pack', function () {
+	return gulp.src(['./c/**/*', './release/**/*', './server/**/*', './views/**/*', 'server.js', 'package.json'], {base: '.'})
+        	   .pipe(gulp.dest('packages/vfe-site_release'))
 })
 
 
