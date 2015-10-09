@@ -1,7 +1,0 @@
-{"host":"10.123.9.9:8997","path":"/home/user_00/sendguan/vfe/vfe-agent/test","desc":"test release","_app_id":"_global","_class":"path","_created_time":1444360475354,"_updated_time":1444360475354,"_id":"2F2WyNZYRtzy8HFN"}
-{"host":"10.123.9.9","port":"8997","_app_id":"_global","_class":"agent","_created_time":1444360436242,"_updated_time":1444360436242,"_id":"DVrt5FmBSKiqq453"}
-{"host":"10.123.9.9","paht":"/data/release/wap/htdocs","_id":"abcd","_class":"map","_app_id":"BSCpwlF5FlAAPxSw","_updated_time":1443962918147}
-{"host":"10.123.9.9","paht":"/data/release/wap/htdocs","_id":"abcd1","_class":"map","_app_id":"BSCpwlF5FlAAPxSw","_updated_time":1443963085897}
-{"host":"10.123.14.14","port":"8997","_app_id":"_global","_class":"agent","_created_time":1444379387393,"_updated_time":1444379387393,"_id":"sZpFKEG6P7Sqfms6"}
-{"host":"10.123.9.9:8997","path":"/home/user_00/sendguan/vfe/vfe-agent/test","desc":"Release test","_app_id":"5lkDF6aSI3SVgOx0","_class":"path","_created_time":1444385406064,"_updated_time":1444385406064,"_id":"uggga0sKEn9saV0o"}
-{"$$indexCreated":{"fieldName":"_app_id","unique":false,"sparse":false}}
