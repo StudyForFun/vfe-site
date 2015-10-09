@@ -160,6 +160,18 @@ module.exports = Zect.create({
 					this.fetchAgents()
 				}.bind(this)
 			})
+		},
+		onDeleteApp: function (id, name) {
+			if (window.confirm('确定删除"' + name + '"?')) {
+				$.ajax({
+					url: '/apps/' + id,
+					method: 'DELETE',
+					data:{},
+					success: function (data, status, xhr) {
+						this.fetch()
+					}.bind(this)
+				})
+			}
 		}
 	}
 })

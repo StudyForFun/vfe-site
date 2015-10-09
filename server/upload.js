@@ -9,8 +9,26 @@ var path = require('path')
 var tmpDir = path.join(__dirname, '../tmp')
 var wsDir = path.join(__dirname, '../.workspace')
 var tar = require('tar')
+var async = require('async')
 
 mkdirp.sync(tmpDir)
+
+function resp(err, data, code) {
+	if (err) return {error: err, code: code || 500}
+	else return {data: data, code: code || 200}
+}
+function rename(oldpath, newpath, cb) {
+	var readStream = fs.createReadStream(oldpath)
+	var writeStream = fs.createWriteStream(newpath)
+	readStream.pipe(writeStream) 
+	    .on('close', function () {
+	        fs.unlink(oldpath, cb)
+	    })
+	    .on('error', function (err) {
+	    	cb(err)
+	    })
+}
+
 router.post('/upload/:app_id', multipart({
 	autoFiles: true,
 	uploadDir: tmpDir
@@ -19,10 +37,17 @@ router.post('/upload/:app_id', multipart({
 	dir = path.join(wsDir, req.params.app_id, dir)
 
 	mkdirp(dir, function (err) {
-		req.files.file.forEach(function (file) {
-			fs.renameSync(file.path, path.join(dir, file.name))
+		if (err) return res.json(resp(err))
+		var hasError
+		async.each(req.files.file, function (file, cb) {
+			rename(file.path, path.join(dir, file.name), function (error) {
+				hasError = error
+				cb(error)
+			})
+		}, function (results) {
+			if (hasError) return res.json(resp(hasError))
+			res.json(resp(null, 'ok'))
 		})
-		res.send('ok')
 	})
 
 })

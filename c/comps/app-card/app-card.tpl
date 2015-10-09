@@ -13,7 +13,7 @@
     </div>
     <div class="extra content">
       <div class="ui two buttons">
-        <a class="ui basic green button" href="{'/p/setting/' + id}">设置</a>
+        <a class="ui basic green button" href="javascript:;" r-on="{click: onDelete}">删除</a>
         <a class="ui basic blue button" href="{'/p/deploy/' + id}">部署</a>
       </div>
     </div>

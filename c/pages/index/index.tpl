@@ -35,12 +35,17 @@
                 <div class="row">
                     <r-repeat items="{$value}">
                         <div class="card-con" r-style="{width: 100/4 + '%'}">
-                            <div r-component="c-appcard" style="width: 220px;" class="app"
+                            <div class="app"
+                                style="width: 220px;" 
+                                r-component="c-appcard" 
                                 r-data="{
                                     id: _id;
                                     name: name;
                                     desc: desc;
                                     time: _created_time;
+                                }"
+                                r-methods="{
+                                  onDelete: onDeleteApp.bind(null, _id, name)
                                 }"
                             ></div>
                         </div>
