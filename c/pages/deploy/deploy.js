@@ -39,6 +39,9 @@ module.exports = Zect.create({
 		this.$comps.pathesMan = $(this.$el).find('.ui.modal.pathesman')
 			.modal('setting', 'transition', 'vertical flip')
 
+		this.$comps.deploy = $(this.$el).find('.ui.modal.deploy')
+			.modal('setting', 'transition', 'horizontal flip')
+
 		this.fetch()
 		this.fetchAgents()
 		this.fetchPathes()
@@ -95,6 +98,12 @@ module.exports = Zect.create({
 				return '<span style="color: yellowgreen">' + Math.round(size/1024/1024) + ' MB</span>'
 			}
 		},
+		setSelectionText: function (value) {
+        	return value.host + '' + value.path
+        },
+        setSelectionValue: function (value) {
+            return value._id
+        },
 		onRoot: function () {
 			this.$data.pathes = []
 			this.fetch()
@@ -258,6 +267,23 @@ module.exports = Zect.create({
 			}.bind(this))
 		},
 		onShowDeploy: function () {
+			this.$comps.deploy.modal('show')
+		},
+		onHideDeploy: function () {
+			this.$comps.deploy.modal('hide')
+		},
+		onDeploy: function () {
+
+			var id = this.$refs.deploySelection.val()
+			var releasePath
+
+			this.$data.releasePathes.some(function (item) {
+				if (item._id == id) {
+					releasePath = item
+					return true
+				}
+			})
+			if (!releasePath) return
 
 			var files = this.$data.files.reduce(function (result, item) {
 				if (item.selected) result.push({
@@ -272,7 +298,9 @@ module.exports = Zect.create({
 				method: 'POST',
 				data: {
 					path: this.$data.pathes.join('/'),
-					files: JSON.stringify(files)
+					files: JSON.stringify(files),
+					release: releasePath.path,
+					host: releasePath.host
 				}
 			})
 		}

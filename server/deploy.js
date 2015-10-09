@@ -21,6 +21,8 @@ router.post('/deploy/:app_id', function (req, res) {
 	var archive = archiver.create('tar', {})
 	var files = JSON.parse(req.body.files)
 	var dir = decodeURIComponent(req.body.path || './')
+	var releaseDir = decodeURIComponent(req.body.release || '')
+	var releaseHost = req.body.host
 	dir = path.join(wsDir, req.params.app_id, dir)
 
 	files.forEach(function (f) {
@@ -32,14 +34,17 @@ router.post('/deploy/:app_id', function (req, res) {
 	})
 
 	var fp = path.join(tmpDir, UUID() + '.tar')
+
+	console.log('Release to', 'http://' + releaseHost + '/?path=' + releaseDir)
 	archive.pipe(fs.createWriteStream(fp))
 		.on('finish', function () {
-				needle.post('http://localhost:1024/dupload/test', {
+				needle.post('http://' + releaseHost + '/?path=' + releaseDir, {
   					'file[0]': {
 						file: fp,
   						content_type: 'application/tar'
   					}
 				}, { multipart: true }, function (err) {
+					if (err) return res.send(err)
 					fs.unlink(fp, function () {
 						res.send('ok')
 					})

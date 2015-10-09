@@ -225,4 +225,35 @@
             </div>
       </div>
     </div>
+    <div class="ui small modal deploy">
+      <div class="header">部署</div>
+      <div class="content">
+          <div class="field" style="margin-bottom: 20px;">
+                <label>选择发布路径</label>
+                <div r-component="c-selection"
+                    r-ref="deploySelection"
+                    r-data="{
+                        name: '选择发布路径';
+                        agents: releasePathes;
+                        setText: setSelectionText;
+                        setValue: setSelectionValue;
+                    }"
+                ></div>
+          </div>
+          <div class="flb-box">
+              <button 
+                  type="submit"
+                  class="ui large button flb-p1" 
+                  style="margin-right: 20px;display:block" 
+                  r-on="{click: onHideDeploy}"
+              >取消</button>
+              <button 
+                  type="submit"
+                  class="ui large primary button flb-p1" 
+                  style="margin:0;display:block" 
+                  r-on="{click: onDeploy}"
+              >发布</button>
+            </div>  
+      </div>
+    </div>
 </r-template>

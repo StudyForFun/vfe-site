@@ -20,6 +20,12 @@ module.exports = Zect.component('c-selection', {
 		},
 		val: function () {
 			return this.dd.dropdown('get value')
+		},
+		setText: function ($value) {
+			return $value.host + ':' + $value.port
+		},
+		setValue: function ($value) {
+			return $value.host + ':' + $value.port
 		}
 	}
 })
