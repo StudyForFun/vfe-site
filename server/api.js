@@ -3,8 +3,11 @@
 var express = require('express')
 var Datastore = require('nedb')
 var router = express.Router()
-var appdb = new Datastore({ filename: './.dbs/app', autoload: true})
-var classdb = new Datastore({ filename: './.dbs/class', autoload: true})
+var mkdirp = require('mkdirp')
+var path = require('path')
+mkdirp.sync(path.join(process.cwd(), '../.dbs'))
+var appdb = new Datastore({ filename: '../.dbs/app', autoload: true})
+var classdb = new Datastore({ filename: '../.dbs/class', autoload: true})
 var COMPACT_INTER = 10*1000
 
 appdb.persistence.setAutocompactionInterval(COMPACT_INTER)

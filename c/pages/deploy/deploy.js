@@ -138,9 +138,18 @@ module.exports = Zect.create({
 			var file = e.currentTarget.dataset.file
 			var type = e.currentTarget.dataset.type
 
-			if (type !== 'dir') return
-			this.$data.pathes.push(file)
-			this.fetch()
+			if (type === 'file') {
+				if (/(\.tar\.gz|\.zip)$/.test(file.toLowerCase())) {
+
+				} else if (/\.(jpg|jpeg|png|gif|webp)$/.test(file.toLowerCase())) {
+
+				} else {
+					
+				}
+			} else {
+				this.$data.pathes.push(file)
+				this.fetch()
+			}
 		},
 		onPath: function (e) {
 			var index = Number(e.currentTarget.dataset.index)
