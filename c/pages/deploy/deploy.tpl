@@ -16,6 +16,10 @@
             r-class="{disabled: !hasSelected}"
             r-on="{click: onShowDeploy}" 
           ><i class="connectdevelop icon"></i> 部署</button>
+          <button class="ui button orange" 
+            r-class="{disabled: !hasSelected}"
+            r-on="{click: onFastDeploy}" 
+          ><i class="steam icon"></i> 一键部署</button>
         </div>
         <div class="ui blue buttons">
           <button class="ui button" r-on="{click: onShowCreate}"><i class="plus icon"></i> 创建目录</button>
@@ -190,7 +194,7 @@
             </div>
       </div>
     </div>
-    <div class="ui small modal pathesman">
+    <div class="ui large modal pathesman">
       <div class="header">路径管理</div>
       <div class="content">
             <div class="p-deploy-table-con">
@@ -200,7 +204,8 @@
                     <th>服务器</th>
                     <th>发布路径</th>
                     <th>描述</th>
-                    <th colspan="2"></th>
+                    <th>自动部署匹配</th>
+                    <th colspan="3">操作</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -214,6 +219,42 @@
                     <td>
                       <span style="color:green">{desc}</span>
                     </td>
+                    <td class="collapsing">
+                      <div class="ui form">
+                        <div class="field"
+                          r-class="{
+                            disabled: $value.status == 'pending';
+                            error: $value.status == 'error';
+                          }"
+                        >
+                          <textarea rows="2" 
+                            style="font-size: 12px;line-height:12px;margin-top: 0px; margin-bottom: 0px; height: 60px;width:200px;"
+                            placeholder="[(dir|file): ] <RegExp>"
+                            data-id="{_id}"
+                            r-model="{'releasePathes[' + $index + '].rules'}"
+                            r-on="{
+                              input: onValidateRules
+                            }"
+                          ></textarea>
+                        </div>
+                      </div>
+                    </td>
+                     <td class="right aligned collapsing">
+                      <a href="javascript:;" 
+                        data-id="{_id}"
+                        r-on="{click: onSaveRule}"
+                      >
+                        <i class="ui icon outline"
+                            r-class="{
+                              save: !$value.status;
+                              loading: $value.status == 'pending';
+                              spinner: $value.status == 'pending';
+                              remove: $value.status == 'error';
+                              disabled: $value.status == 'error';
+                            }"
+                        ></i>
+                      </a>
+                    </td>
                     <td class="right aligned collapsing">
                       <a href="javascript:;" 
                         data-id="{_id}"
@@ -224,6 +265,7 @@
                     </td>
                     <td class="aligned collapsing">
                       <a href="{'/p/remote?app_id=' + app_id + '&host=' + encodeURIComponent(host) + '&path=' + encodeURIComponent(path)}" 
+                        target="_blank" 
                         data-id="{_id}"
                       >
                         <i class="ui icon unhide"></i>
@@ -253,11 +295,11 @@
           <label>发布文件</label>
           <div class="p-deploy-table-con-deploy">
             <table class="ui celled striped table">
-              <!-- <thead>
-                <th colspan="3">发布文件</th>
-              </thead> -->
               <tbody>
                 <tr r-repeat="{selectedFiles}">
+                  <td class="center aligned collapsing">
+                    {$index + 1}
+                  </td>
                   <td>
                     <i class="icon" 
                       r-class="{
@@ -267,27 +309,87 @@
                       }"
                     ></i> {file}
                   </td>
-                  <td class="right aligned collapsing">{- fsize(size)}</td>
                   <td class="right aligned collapsing">{fdate(update_time, 'YY/XMM/XDD hh:mm:ss')}</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="flb-box">
-              <button 
-                  type="submit"
-                  class="ui large button flb-p1" 
-                  style="margin-right: 20px;display:block" 
-                  r-on="{click: onHideDeploy}"
-              >关闭</button>
-              <button 
-                  type="submit"
-                  class="ui large primary button flb-p1"
-                  style="margin:0;display:block" 
-                  r-on="{click: onDeploy}"
-                  r-class="{loading: deploying}" 
-              >发布</button>
-            </div>  
+            <button 
+                type="submit"
+                class="ui large button flb-p1" 
+                style="margin-right: 20px;display:block" 
+                r-on="{click: onHideDeploy}"
+            >关闭</button>
+            <button 
+                type="submit"
+                class="ui large primary button flb-p1"
+                style="margin:0;display:block" 
+                r-on="{click: onDeploy}"
+                r-class="{loading: deploying}" 
+            >发布</button>
+          </div>  
+      </div>
+    </div>
+    <div class="ui modal fastdeploy">
+      <div class="header">一键部署</div>
+      <div class="content">
+          <div class="p-deploy-table-con-fastdeploy">
+            <table class="ui celled striped table">
+              <tbody>
+                <tr r-repeat="{fastDeploySelectedFiles}">
+                  <td class="center aligned collapsing">
+                    {$index + 1}
+                  </td>
+                  <td>
+                    <i class="icon" 
+                      r-class="{
+                        folder: type == 'dir';
+                        file: type !== 'dir'; 
+                        outline: type !== 'dir'; 
+                      }"
+                    ></i> {file}
+                  </td>
+                  <td class="aligned collapsing">
+                    <i class="icon"
+                      r-class="{
+                        minus: deploy_status == 'unmatch';
+                        grey: deploy_status == 'unmatch';
+
+                        spinner: deploy_status == 'pending';
+                        loading: deploy_status == 'pending';
+                        
+                        remove: deploy_status == 'error';
+                        red: deploy_status == 'error';
+
+                        checkmark: deploy_status == 'done';
+                        green: deploy_status == 'done';
+                      }"
+                    ></i>
+                  </td>
+                  <td class="collapsing">
+                    <div>
+                      <r-repeat items="{matches}">
+                        <p>
+                          <i class="icon red remove" r-show="{status == 'error'}"></i>
+                          <span style="color: #2185d0">{rules} </span> 
+                          <span style="color: #21ba45">{host}{path}</span>
+                          <a href="{'/p/remote?app_id=' + app_id + '&host=' + encodeURIComponent(host) + '&path=' + encodeURIComponent(path)}"
+                            target="_blank" 
+                          >
+
+
+                            <i class="icon blue unhide"></i>
+                          </a>
+                        </p>
+                      </r-repeat>
+                    </div>
+                  </td>
+                  <!-- <td class="right aligned collapsing">{fdate(update_time, 'YY/XMM/XDD hh:mm:ss')}</td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
       </div>
     </div>
 </r-template>

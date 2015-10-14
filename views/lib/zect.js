@@ -3135,6 +3135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                 */
 	                this._update = function () {
 	                    var nextValue = vm.$get(that._prop)
+	                    if (util.isUndef(nextValue)) nextValue = ''
 	                    if (that.$el[vType] !== nextValue) {
 	                        that.$el[vType] = nextValue
 	                    }

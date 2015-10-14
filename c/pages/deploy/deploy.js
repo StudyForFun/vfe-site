@@ -1,6 +1,7 @@
 'use strict';
 
 var fdate = require('libs/date')
+var Chain = require('libs/chain')
 require('comps/upload')
 require('comps/selection')
 
@@ -15,7 +16,9 @@ module.exports = Zect.create({
 			path: '',
 			path_desc: '',
 			dir_name: '',
-			deploying: false
+			deploying: false,
+			selectedFiles: [],
+			fastDeploySelectedFiles: []
 		}
 	},
 	created: function () {
@@ -43,6 +46,9 @@ module.exports = Zect.create({
 		this.$comps.deploy = $(this.$el).find('.ui.modal.deploy')
 			.modal('setting', 'transition', 'horizontal flip')
 
+		this.$comps.fastdeploy = $(this.$el).find('.ui.modal.fastdeploy')
+			.modal('setting', 'transition', 'horizontal flip')
+
 		this.fetch()
 		this.fetchAgents()
 		this.fetchPathes()
@@ -56,15 +62,16 @@ module.exports = Zect.create({
 				})
 			}
 		},
-		selectedFiles: {
-			deps: ['files'],
-			get: function () {
-				return this.$data.files.reduce(function (result, item) {
-					if (item.selected) result.push(item)
-					return result
-				}, [])
-			}
-		}
+		// for selection performance
+		// selectedFiles: {
+		// 	deps: ['files'],
+		// 	get: function () {
+		// 		return this.$data.files.reduce(function (result, item) {
+		// 			if (item.selected) result.push(item)
+		// 			return result
+		// 		}, [])
+		// 	}
+		// }
 	},
 	methods: {
 		fetch: function () {
@@ -129,6 +136,12 @@ module.exports = Zect.create({
         },
         setSelectionValue: function (value) {
             return value._id
+        },
+        getSelectedFiles: function () {
+        	return this.$data.files.reduce(function (result, item) {
+				if (item.selected) result.push(item)
+				return result
+			}, [])
         },
 		onRoot: function () {
 			this.$data.pathes = []
@@ -302,6 +315,7 @@ module.exports = Zect.create({
 			}.bind(this))
 		},
 		onShowDeploy: function () {
+			this.$data.selectedFiles = this.getSelectedFiles()
 			this.$comps.deploy.modal('show')
 		},
 		onHideDeploy: function () {
@@ -349,6 +363,169 @@ module.exports = Zect.create({
 					this.$data.deploying = false
 				}.bind(this)
 			})
+		},
+		onSaveRule: function (e) {
+			var tar = e.currentTarget
+			var id = tar.dataset.id
+			this.$data.releasePathes.some(function (item, index) {
+				if (item._id == id) {
+					var valid = this.validateRules(item.rules)
+					var status = item.status
+					this.$set('releasePathes.' + index + '.status', valid ? 'pending' : 'error')
+					if (!valid || status == 'pending') {
+						return
+					}
+					$.ajax({
+						url: '/classes/path/' + id + '?_app_id=' + this.$data.app_id,
+						method: 'PATCH',
+						data: {
+							rules: item.rules
+						},
+						success: function (data) {
+							setTimeout(function () {
+								this.$set('releasePathes.' + index + '.status', '')
+							}.bind(this), 250)
+						}.bind(this)
+					})
+					return true
+				}
+			}.bind(this))
+		},
+		onValidateRules: function (e) {
+			var tar = e.currentTarget
+			var id = tar.dataset.id
+			this.$data.releasePathes.some(function (item, index) {
+				if (item._id == id) {
+					var valid = this.validateRules(item.rules)
+					var status = valid ? (item.status == 'pending' ? 'pending' : '') : 'error'
+					this.$set('releasePathes.' + index + '.status', status)
+					return true
+				}
+			}.bind(this))
+		},
+		onShowFastDeploy: function () {
+			var that = this
+
+			var selectedFiles = JSON.parse(JSON.stringify(this.getSelectedFiles())).map(function (item) {
+				item.matches = []
+				item.deploy_status = 'unmatch'
+				return item
+			})
+
+			var deploys = this.$data.releasePathes.reduce(function (results, path) {
+
+				var deployFiles = []
+
+				var rules = (path.rules || '').trim()
+				if (rules){
+					rules = that.convertRule2Reg(rules)
+					selectedFiles.forEach(function (item) {
+						rules.some(function (r) {
+							if (r.type == item.type && r.rule.test(item.file)) {
+								deployFiles.push(item)
+								item.matches.push({
+									id: path._id,
+									host: path.host,
+									path: path.path,
+									rules: path.rules,
+									status: 'ready'
+								})
+								item.deploy_status = 'pending'
+								return true
+							}
+						})
+					})
+				}
+				if (deployFiles.length) {
+					results.push({
+						deployPath: path,
+						deployFiles: deployFiles
+					})
+				}
+				return results
+			}, [])
+
+			this.$data.fastDeploySelectedFiles = selectedFiles
+			this.$comps.fastdeploy.modal('show')
+
+			if (!deploys.length) return
+
+			var chain = Chain()
+			chain.each.apply(chain, deploys.map(function (deployData) {
+				var files = deployData.deployFiles.map(function (item) {
+					return {
+						type: item.type,
+						file: item.file
+					}
+				})
+				var releasePath = deployData.deployPath
+				return function (c) {
+					$.ajax({
+						url: '/deploy/' + that.$data.app_id,
+						method: 'POST',
+						data: {
+							path: that.$data.pathes.join('/'),
+							files: JSON.stringify(files),
+							release: releasePath.path,
+							host: releasePath.host
+						},
+						success: function (data) {
+							// set status to done
+							that.$data.fastDeploySelectedFiles.forEach(function (item) {
+								files.some(function (f) {
+									if (f.type == item.type && f.file == item.file) {
+										if (data !== 'ok') {
+											item.matches.forEach(function (m) {
+												if (m.id == releasePath._id) {
+													m.status = 'error'
+												}
+											})
+										}
+										setTimeout(function () {
+											item.deploy_status = data == 'ok' ? 'done' : 'error'
+										}, 500)
+										return true
+									}
+								})
+							})
+							c.next()
+						}
+					})
+				}
+			}))
+			.then()
+			.context(this)
+			.start()
+		},
+		onHideFastDeploy: function () {
+			this.$comps.fastdeploy.modal('hide')
+		},
+		onFastDeploy: function () {
+			this.onShowFastDeploy()
+		},
+		convertRule2Reg: function (rules) {
+			return rules.trim().split(/\r?\n/).map(function (rs) {
+				var type = 'file'
+				var rule = rs.trim().replace(/^(dir|file):\s*/, function (m, t) {
+					if (t == 'dir') type = 'dir'
+					return ''
+				})
+				return {
+					source: rs,
+					type: type,
+					rule: new RegExp(rule)
+				}
+			})
+		},
+		validateRules: function(rules) {
+			rules = rules.trim()
+			if (!rules) return true
+			try {
+				this.convertRule2Reg(rules)
+				return true
+			} catch (e) {
+				return false
+			}
 		}
 	}
 })
