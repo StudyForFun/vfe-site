@@ -7,7 +7,9 @@ var mkdirp = require('mkdirp')
 var rimraf = require('rimraf')
 var fs = require('fs')
 
-var root = path.join(__dirname, '../.workspace')
+var root = path.join(__dirname, '../../.workspace')
+
+mkdirp.sync(root)
 function resp(err, data, code) {
 	if (err) return {error: err, code: code || 500}
 	else return {data: data, code: code || 200}

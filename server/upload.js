@@ -7,7 +7,7 @@ var multipart = require('connect-multiparty')
 var mkdirp = require('mkdirp')
 var path = require('path')
 var tmpDir = path.join(__dirname, '../tmp')
-var wsDir = path.join(__dirname, '../.workspace')
+var wsDir = path.join(__dirname, '../../.workspace')
 var tar = require('tar')
 var async = require('async')
 
