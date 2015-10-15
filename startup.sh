@@ -1,0 +1,1 @@
+forever -a --uid "vfe-site" node ./server.js

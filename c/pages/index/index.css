@@ -5,3 +5,6 @@
 .p-index .card-con .app {margin: auto;}
 .p-index-table-con {max-height: 400px;min-height: 100px;overflow: auto}
 .p-index-table-con-agents {max-height: 200px;min-height: 50px;overflow: auto;margin-bottom: 20px;}
+
+.p-index .logo {width: 36px;display: block;vertical-align: baseline;box-sizing: border-box;margin-right: 20px;}
+.p-index .slogan {line-height: 36px;font-size:20px;color: #333}

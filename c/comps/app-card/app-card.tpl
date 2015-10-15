@@ -1,6 +1,8 @@
-<r-template class="ui card">
+<r-template class="ui card app-card">
     <div class="content">
-      <!-- <img class="right floated mini ui image" src="/images/avatar/large/elliot.jpg"> -->
+      <a href="javascript:;" class="remove-icon" r-on="{click: onDelete}">
+        <i class="icon remove"></i>
+      </a>
       <div style="text-align:right">
         {name}
       </div>
@@ -13,7 +15,7 @@
     </div>
     <div class="extra content">
       <div class="ui two buttons">
-        <a class="ui basic green button" href="javascript:;" r-on="{click: onDelete}">删除</a>
+        <!-- <a class="ui basic green button" href="javascript:;" r-on="{click: onDelete}">删除</a> -->
         <a class="ui basic blue button" href="{'/p/deploy/' + id}">部署</a>
       </div>
     </div>

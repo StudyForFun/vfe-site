@@ -1,3 +1,21 @@
+@font-face {
+    font-family: "proxima-nova";
+    src: url("/asserts/fonts/ProximaNova-Light.otf");
+}
+@font-face {
+  font-family: "Chinese";
+  src: local('微软雅黑');
+}
+
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 100;
+    src: local('Raleway Thin'), local('Raleway-Thin'), url("/asserts/fonts/Raleway-100.woff") format('woff');
+}
+body {
+    font-family: "proxima-nova", "Raleway", "Chinese", Consolas, "Arial", sans-serif;
+}
 
 *::-webkit-scrollbar{
    width: 10px;

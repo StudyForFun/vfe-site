@@ -3,6 +3,9 @@
         <div class="flb-box"
             style="margin: 20px;" 
         >
+            <img src="/asserts/images/video.png" class="logo">
+            <div class="slogan">Deploy, make easy.</div>
+            <div class="flb-p1"></div>
             <button class="ui icon button blue basic circular" style="margin-right: 20px;"
                 r-on="{click: onShowCreate}"
             >
@@ -13,7 +16,7 @@
             >
               <i class="sitemap icon"></i>
             </button>
-            <button class="ui icon button blue basic circular" style="margin-right: 20px;"
+<!--             <button class="ui icon button blue basic circular" style="margin-right: 20px;"
                 r-on="{click: onShowAddPath}"
             >
               <i class="pagelines icon"></i>
@@ -22,8 +25,8 @@
                 r-on="{click: onShowPathes}"
             >
               <i class="browser icon"></i>
-            </button>
-            <div class="flb-p1"></div>
+            </button> -->
+            <!-- <div class="flb-p1"></div> -->
             <div r-component="c-search" 
                 r-data="{
                     placeholder: '搜索APP'

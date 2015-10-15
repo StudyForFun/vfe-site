@@ -4,7 +4,10 @@ var gulp = require('gulp')
 var path = require('path')
 var vfe = require('vfe')
 var watch = require('gulp-watch')
+var tar = require('gulp-tar')
+var gzip = require('gulp-gzip')
 var inject = require('gulp-inject')
+var dateFormat = require('dateformat')
 var meta = require('./package.json')
 
 /**
@@ -38,7 +41,10 @@ gulp.task('watch', function () {
 })
 gulp.task('pack', function () {
 	return gulp.src(['./c/**/*', './release/**/*', './server/**/*', './views/**/*', 'server.js', 'package.json'], {base: '.'})
-        	   .pipe(gulp.dest('packages/vfe-site_release'))
+        	   // .pipe(gulp.dest('packages/vfe-site_release'))
+        	   .pipe(tar('vfe-site_' + dateFormat(new Date, "yyyy-mm-dd-HH-MM")))
+        	   .pipe(gzip())
+        	   .pipe(gulp.dest('packages'))
 })
 
 
@@ -48,50 +54,53 @@ gulp.task('pack', function () {
 function build (options) {
 	return function () {
 		return 	vfe.merge(
-				gulp.src(config.html)
-					.pipe(inject(
-						vfe.merge(
-							gulp.src(options.libs || ['./views/lib/*.js'])
-								.pipe(vfe.concat(meta.name + '-lib.js', {newLine: ';'}))
-								.pipe(vfe.hash({
-						            hashLength: 6,
-						            template: '<%= name %>_<%= hash %><%= ext %>'
-						        }))
-								.pipe(vfe.if(options.minify, vfe.uglify()))
-								.pipe(gulp.dest(release_dir)),
+					gulp.src(config.html)
+						.pipe(inject(
+							vfe.merge(
+								gulp.src(options.libs || ['./views/lib/*.js'])
+									.pipe(vfe.concat(meta.name + '-lib.js', {newLine: ';'}))
+									.pipe(vfe.hash({
+							            hashLength: 6,
+							            template: '<%= name %>_<%= hash %><%= ext %>'
+							        }))
+									.pipe(vfe.if(options.minify, vfe.uglify()))
+									.pipe(gulp.dest(release_dir)),
 
-							vfe({
-								minify: options.minify,
-								name: meta.name || 'bundle',
-								entry: './views/index',
-								libs: [],
-								modulesDirectories: [COMPONENT_MODULES]
-							})
-							.pipe(gulp.dest(release_dir))
-							.pipe(vfe.filter(function (file) {
-								return  options.minify 
-												? /\.min\.js$/.test(file.path) 
-												: !/\.min\.js$/.test(file.path)
-							}))
-						),
-						{
-							transform: function (filepath) {
-								/**
-								 * Javascript release prefix
-								 */
-								var uri = (options.prefix || '/') + path.basename(filepath)
-								if (/\.css$/.test(uri)) {
-									return '<link rel="stylesheet" href="%s" />'.replace('%s', uri)
-								} else {
-									return '<script type="text/javascript" src="%s"></script>'.replace('%s', uri)
+								vfe({
+									minify: options.minify,
+									name: meta.name || 'bundle',
+									entry: './views/index',
+									libs: [],
+									modulesDirectories: [COMPONENT_MODULES]
+								})
+								.pipe(gulp.dest(release_dir))
+								.pipe(vfe.filter(function (file) {
+									return  options.minify 
+													? /\.min\.js$/.test(file.path) 
+													: !/\.min\.js$/.test(file.path)
+								}))
+							),
+							{
+								transform: function (filepath) {
+									/**
+									 * Javascript release prefix
+									 */
+									var uri = (options.prefix || '/') + path.basename(filepath)
+									if (/\.css$/.test(uri)) {
+										return '<link rel="stylesheet" href="%s" />'.replace('%s', uri)
+									} else {
+										return '<script type="text/javascript" src="%s"></script>'.replace('%s', uri)
+									}
 								}
 							}
-						}
-					))
-					.pipe(gulp.dest(release_dir)),
+						))
+						.pipe(gulp.dest(release_dir)),
 
-				gulp.src(['./views/asserts/**/*'])
-					.pipe(gulp.dest(path.join(release_dir, 'asserts')))
+					gulp.src(['./views/asserts/**/*'])
+						.pipe(gulp.dest(path.join(release_dir, 'asserts'))),
+
+					gulp.src(['./views/favicon.ico'])
+						.pipe(gulp.dest(release_dir))
 				)
 				.on('end', function () {
 					// It will be trigger start callback
