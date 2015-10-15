@@ -11,7 +11,11 @@ var needle = require('needle')
 
 router.get('/remote', function (req, res) {
 	needle.get('http://' + decodeURIComponent(req.query.host) + '?path=' + encodeURIComponent(req.query.path), function (err, response) {
-		res.send(response.body)
+		if (err) {
+			res.send({error: err || 'error'})
+		} else {
+			res.send(response.body)
+		}
 	})
 })
 
