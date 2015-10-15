@@ -6,33 +6,33 @@
         >
           <i class="home icon"></i>
         </button>
-        <div class="ui buttons blue">
-       		<button class="ui button" r-on="{click: onSelectAll}"><i class="check circle outline icon"></i> 全选</button>
-  		    <!-- <button class="ui button"><i class="cut icon"></i> 移动</button> -->
-       		<button class="ui button" r-on="{click: onDeleteFiles}"><i class="trash icon"></i> 删除</button>
+     		<button class="ui button labeled icon" r-on="{click: onSelectAll}"><i class="check circle outline icon"></i> 全选</button>
+     		<button class="ui button labeled icon" r-on="{click: onDeleteFiles}"><i class="trash icon"></i> 删除</button>
+
+        <button class="ui button" 
+          r-class="{
+            disabled: !hasSelected;
+            orange: hasSelected;
+          }"
+          r-on="{click: onFastDeploy}" 
+        ><i class="connectdevelop icon" r-class="{loading: hasSelected}"></i> 一键部署</button>
+        <button class="ui button" 
+          r-class="{
+            disabled: !hasSelected;
+            brown: hasSelected;
+          }"
+          r-on="{click: onShowDeploy}" 
+        ><i class="steam icon"></i> 部署</button>
+       	<div class="ui buttons blue">
+          <button class="ui button icon" r-on="{click: onShowCreate}" title="创建目录"><i class="folder open icon"></i></button>
+          <button class="ui button icon" r-on="{click: onShowUpload}" title="上传文件"><i class="upload icon"></i></button>
+       		<button class="ui button icon" r-on="{click: onShowAddPath}" title="添加发布路径"><i class="send icon"></i></button>
+       		<button class="ui button icon" r-on="{click: onShowPathes}" title="管理发布路径"><i class="setting icon"></i></button>
        	</div>
-        <div class="ui buttons">
-          <button class="ui button blue" 
-            r-class="{disabled: !hasSelected}"
-            r-on="{click: onShowDeploy}" 
-          ><i class="connectdevelop icon"></i> 部署</button>
-          <button class="ui button orange" 
-            r-class="{disabled: !hasSelected}"
-            r-on="{click: onFastDeploy}" 
-          ><i class="steam icon"></i> 一键部署</button>
-        </div>
-        <div class="ui blue buttons">
-          <button class="ui button" r-on="{click: onShowCreate}"><i class="plus icon"></i> 创建目录</button>
-          <button class="ui button" r-on="{click: onShowUpload}"><i class="upload icon"></i> 上传</button>
-        </div>
-       	<div class="ui buttons">
-       		<button class="ui button" r-on="{click: onShowAddPath}"><i class="pagelines icon"></i> 创建映射</button>
-       		<button class="ui button" r-on="{click: onShowPathes}"><i class="browser icon"></i> 管理映射</button>
-       	</div>
-  	  	<button class="ui icon circular basic button" r-on="{click: onSync}"><i class="repeat icon"></i></button>
+  	  	<button class="ui icon circular basic button green" r-on="{click: onSync}" title="同步文件"><i class="repeat icon"></i></button>
     	</div>
 		  <div class="table-con">
-	    	<table class="ui celled striped table">
+	    	<table class="ui celled striped table blue">
   			  <thead>
   			    <tr>
   				    <th colspan="5">
@@ -198,7 +198,7 @@
       <div class="header">路径管理</div>
       <div class="content">
             <div class="p-deploy-table-con">
-              <table class="ui celled striped table">
+              <table class="ui celled striped table yellow">
                 <thead>
                   <tr>
                     <th>服务器</th>
@@ -294,7 +294,7 @@
           </div>
           <label>发布文件</label>
           <div class="p-deploy-table-con-deploy">
-            <table class="ui celled striped table">
+            <table class="ui celled striped table brown">
               <tbody>
                 <tr r-repeat="{selectedFiles}">
                   <td class="center aligned collapsing">
@@ -326,8 +326,13 @@
                 class="ui large primary button flb-p1"
                 style="margin:0;display:block" 
                 r-on="{click: onDeploy}"
-                r-class="{loading: deploying}" 
-            >发布</button>
+                r-class="{
+                  primary: !deployStatus;
+                  loading: deploying;
+                  error: deployStatus == 'error';
+                  green: deployStatus == 'done';
+                }" 
+            >{'发布'+(deployStatus ? (deployStatus == 'error' ? '失败':'成功') : '')}</button>
           </div>  
       </div>
     </div>
@@ -335,7 +340,7 @@
       <div class="header">一键部署</div>
       <div class="content">
           <div class="p-deploy-table-con-fastdeploy">
-            <table class="ui celled striped table">
+            <table class="ui celled striped table orange">
               <tbody>
                 <tr r-repeat="{fastDeploySelectedFiles}">
                   <td class="center aligned collapsing">

@@ -1,4 +1,4 @@
-<r-template class="ui card app-card">
+<r-template class="ui card app-card green">
     <div class="content">
       <a href="javascript:;" class="remove-icon" r-on="{click: onDelete}">
         <i class="icon remove"></i>

@@ -18,7 +18,8 @@ module.exports = Zect.create({
 			dir_name: '',
 			deploying: false,
 			selectedFiles: [],
-			fastDeploySelectedFiles: []
+			fastDeploySelectedFiles: [],
+			deployStatus: ''
 		}
 	},
 	created: function () {
@@ -326,6 +327,8 @@ module.exports = Zect.create({
 			if (this.$data.deploying) return
 
 			this.$data.deploying = true
+			this.$data.deployStatus = ''
+
 
 			var id = this.$refs.deploySelection.val()
 			var releasePath
@@ -359,8 +362,10 @@ module.exports = Zect.create({
 					release: releasePath.path,
 					host: releasePath.host
 				},
-				success: function () {
+				success: function (data) {
 					this.$data.deploying = false
+					this.$data.deployStatus = data == 'ok' ? 'done' : 'error'
+
 				}.bind(this)
 			})
 		},
