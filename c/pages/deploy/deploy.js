@@ -4,6 +4,7 @@ var fdate = require('libs/date')
 var Chain = require('libs/chain')
 require('comps/upload')
 require('comps/selection')
+require('comps/copyfile')
 
 module.exports = Zect.create({
 	template: require('./deploy.tpl'),
@@ -21,7 +22,9 @@ module.exports = Zect.create({
 			fastDeploySelectedFiles: [],
 			deployStatus: '',
 			app_name: '',
-			app_desc: ''
+			app_desc: '',
+			copyStatus: '',
+			copying: false
 		}
 	},
 	created: function () {
@@ -50,6 +53,9 @@ module.exports = Zect.create({
 			.modal('setting', 'transition', 'horizontal flip')
 
 		this.$comps.fastdeploy = $(this.$el).find('.ui.modal.fastdeploy')
+			.modal('setting', 'transition', 'horizontal flip')
+
+		this.$comps.copy = $(this.$el).find('.ui.modal.copy')
 			.modal('setting', 'transition', 'horizontal flip')
 
 		this.fetch()
@@ -341,6 +347,55 @@ module.exports = Zect.create({
 					success: done.bind(this)
 				})
 			}.bind(this))
+		},
+		onShowCopy: function () {
+			if(!this.getSelectedFiles().length) return
+
+			this.$refs.copyfile.fetch()
+			this.$comps.copy.modal('show')
+		},
+		onHideCopy: function () {
+			this.$comps.copy.modal('hide')
+		},
+		onCopy: function () {
+			var files = this.$data.files.reduce(function (result, item) {
+				if (item.selected) result.push({
+					type: item.type,
+					file: item.file
+				})
+				return result
+			}, [])
+
+			if (!files.length) {
+				this.$data.copying = false
+				return
+			}
+
+			this.$data.copying = true
+			var dest = this.$refs.copyfile.getCopyUrl()
+			var path = this.$data.pathes.length ? '/' + this.$data.pathes.join('/') : './'
+
+			$.ajax({
+				url: '/ws/' + this.$data.app_id + '/copy',
+				method: 'POST',
+				data: {
+					path: path,
+					files: JSON.stringify(files),
+					dest: dest
+				},
+				success: function (data) {
+					this.$data.copying = false
+					this.$data.copyStatus = data.data == 'ok' ? 'done' : 'error'
+					this.onHideCopy()
+					if(data.data == 'ok') {
+						alert('拷贝成功')
+					} else if(data.data == 'same') {
+						alert('拷贝失败: 不支持拷贝时内嵌同名文件夹~')		
+					} else {
+						alert('拷贝失败')
+					}
+				}.bind(this)
+			})
 		},
 		onShowDeploy: function () {
 			this.$data.selectedFiles = this.getSelectedFiles()

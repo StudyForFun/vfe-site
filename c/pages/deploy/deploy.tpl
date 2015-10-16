@@ -14,6 +14,7 @@
         ><i class="check icon"></i></button>
         <button class="ui icon circular button" r-on="{click: onSync}" title="同步文件"><i class="repeat icon"></i></button>
      		<button class="ui icon button circular" r-on="{click: onDeleteFiles}"><i class="trash icon"></i></button>
+        <button class="ui icon circular button" r-on="{click: onShowCopy}" title="复制"><i class="copy icon"></i></button>
 
         <button class="ui button icon green labeled" r-on="{click: onShowUpload}" title="上传文件"><i class="upload icon"></i> 上传</button>
         <button class="ui button icon" 
@@ -214,6 +215,39 @@
                 >添加</button>
               </div>  
             </div>
+      </div>
+    </div>
+     <div class="ui small modal copy">
+      <div class="header">拷贝到</div>
+      <div class="content">
+          <div r-component="c-copyfile"
+            r-ref="copyfile"
+            r-data="{
+              app_id: app_id;
+            }"
+            r-methods="{
+            }"
+          ></div>
+          <div class="flb-box">
+            <button 
+                type="submit"
+                class="ui large button flb-p1" 
+                style="margin-right: 20px;display:block" 
+                r-on="{click: onHideCopy}"
+            >关闭</button>
+            <button 
+                type="submit"
+                class="ui large primary button flb-p1"
+                style="margin:0;display:block" 
+                r-on="{click: onCopy}"
+                r-class="{
+                  primary: !copyStatus;
+                  loading: copying;
+                  error: copyStatus == 'error';
+                  green: copyStatus == 'done';
+                }" 
+            >{'粘贴到当前目录'+(copyStatus ? (copyStatus == 'error' ? '失败':'成功') : '')}</button>
+          </div>  
       </div>
     </div>
     <div class="ui large modal pathesman">
