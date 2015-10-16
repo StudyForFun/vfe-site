@@ -29,7 +29,7 @@ function resp(err, data, code) {
  * DELETE /apps/:id 	code: 15xx
  */
 router.get('/apps', function (req, res) {
-	appdb.find({}).sort({_created_time: -1}).exec(function (err, results) {
+	appdb.find({}).sort({_created_time: 1}).exec(function (err, results) {
 		res.json(resp(err, results))
 	})
 })
@@ -113,7 +113,7 @@ router.get('/classes/:class', function (req, res) {
 			_app_id: req.query._app_id
 		})
 		.sort({
-			_created_time: -1
+			_created_time: 1
 		})
 		.exec(function (err, results) {
 			res.json(resp(err, results))
