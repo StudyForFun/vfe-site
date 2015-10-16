@@ -41,7 +41,7 @@ gulp.task('watch', function () {
 })
 gulp.task('pack', function () {
 	return gulp.src([
-					'./c/**/*', './release/**/*', './server/**/*', './views/**/*', 'server.js', 'package.json', 
+					'./c/**/*', './release/**/*', './server/**/*', './views/**/*', 'server.js', 'package.json', './*.sh'
 					'node_modules/tar/**/*', 'node_modules/unzip/**/*', 'node_modules/tar.gz/**/*'
 				], {base: '.'})
         	   .pipe(gulp.dest('packages/vfe-site-release'))
