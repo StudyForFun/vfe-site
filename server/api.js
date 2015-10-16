@@ -38,10 +38,10 @@ router.get('/apps/:id', function (req, res) {
 		if (err) {
 			res.json(resp(err))
 		} else {
-			if (!result) {
+			if (result) {
 				res.json(resp(null, result))
 			} else {
-				res.json(resp('[' + id + '] is not exist.', null, 1101))
+				res.json(resp('[' + req.params.id + '] is not exist.', null, 1101))
 			}
 		}
 	})

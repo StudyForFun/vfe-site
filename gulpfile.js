@@ -40,9 +40,12 @@ gulp.task('watch', function () {
 	}))
 })
 gulp.task('pack', function () {
-	return gulp.src(['./c/**/*', './release/**/*', './server/**/*', './views/**/*', 'server.js', 'package.json'], {base: '.'})
-        	   // .pipe(gulp.dest('packages/vfe-site_release'))
-        	   .pipe(tar('vfe-site_' + dateFormat(new Date, "yyyy-mm-dd-HH-MM")))
+	return gulp.src([
+					'./c/**/*', './release/**/*', './server/**/*', './views/**/*', 'server.js', 'package.json', 
+					'node_modules/tar/**/*', 'node_modules/unzip/**/*', 'node_modules/tar.gz/**/*'
+				], {base: '.'})
+        	   .pipe(gulp.dest('packages/vfe-site-release'))
+        	   .pipe(tar('vfe-site_' + dateFormat(new Date, "yyyy-mm-dd-HH-MM") + '.tar'))
         	   .pipe(gzip())
         	   .pipe(gulp.dest('packages'))
 })

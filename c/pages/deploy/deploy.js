@@ -19,7 +19,9 @@ module.exports = Zect.create({
 			deploying: false,
 			selectedFiles: [],
 			fastDeploySelectedFiles: [],
-			deployStatus: ''
+			deployStatus: '',
+			app_name: '',
+			app_desc: ''
 		}
 	},
 	created: function () {
@@ -53,6 +55,7 @@ module.exports = Zect.create({
 		this.fetch()
 		this.fetchAgents()
 		this.fetchPathes()
+		this.fetchAppInfo()
 	},
 	computed: {
 		hasSelected: {
@@ -62,17 +65,7 @@ module.exports = Zect.create({
 					return item.selected
 				})
 			}
-		},
-		// for selection performance
-		// selectedFiles: {
-		// 	deps: ['files'],
-		// 	get: function () {
-		// 		return this.$data.files.reduce(function (result, item) {
-		// 			if (item.selected) result.push(item)
-		// 			return result
-		// 		}, [])
-		// 	}
-		// }
+		}
 	},
 	methods: {
 		fetch: function () {
@@ -99,8 +92,23 @@ module.exports = Zect.create({
 							}
 						}).map(function (item) {
 							item.selected = false
+							item.pending = false
 							return item
 						})
+					}
+				}.bind(this)
+			})
+		},
+		fetchAppInfo: function () {
+			$.ajax({
+				url: '/apps/' + this.$data.app_id,
+				success: function (data) {
+					if (data && data.data) {
+						data = data.data
+						this.$data = {
+							app_name: data.name,
+							app_desc: data.desc
+						}
 					}
 				}.bind(this)
 			})
@@ -144,25 +152,44 @@ module.exports = Zect.create({
 				return result
 			}, [])
         },
-		onRoot: function () {
+		onRoot: function (e) {
 			this.$data.pathes = []
 			this.fetch()
 		},
 		onEnter: function (e) {
+			var dir = e.currentTarget.dataset.file
+			this.$data.pathes.push(dir)
+			this.fetch()
+		},
+		onOpenFile: function (e) {
 			var file = e.currentTarget.dataset.file
-			var type = e.currentTarget.dataset.type
-
-			if (type === 'file') {
-				if (/(\.tar\.gz|\.zip)$/.test(file.toLowerCase())) {
-
-				} else if (/\.(jpg|jpeg|png|gif|webp)$/.test(file.toLowerCase())) {
-
-				} else {
-					
-				}
-			} else {
-				this.$data.pathes.push(file)
-				this.fetch()
+			if (/(\.tar\.gz|\.zip|\.tar)$/i.test(file)) {
+				var tarFile
+				this.$data.files.some(function (item) {
+					if (item.type == 'file' && item.file === file) {
+						tarFile = item
+						return true
+					}
+				})
+				tarFile.pending = true
+				$.ajax({
+					url: '/ws/' + this.$data.app_id + '/extract',
+					method: 'POST',
+					data: {
+						path: this.$data.pathes.length ? '/' + this.$data.pathes.join('/') : '',
+						filename: file
+					},
+					success: function (data) {
+						setTimeout(function () {
+							tarFile.pending = false
+							if (data && !data.error) {
+								this.fetch()
+							}
+						}.bind(this), 100)
+					}.bind(this)
+				})
+			} else if (/\.(jpg|jpeg|png|gif|webp)$/i.test(file)) {
+				// TBD
 			}
 		},
 		onPath: function (e) {

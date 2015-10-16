@@ -1,35 +1,45 @@
 <r-template class="p-deploy page">
     <div class="container">
-    	<div class="operations">
+    	<div class="operations flb-box">
         <button class="ui icon button blue basic circular" style="margin-right: 10px;"
             r-on="{click: onHome}"
         >
           <i class="home icon"></i>
         </button>
-     		<button class="ui button labeled icon" r-on="{click: onSelectAll}"><i class="check circle outline icon"></i> 全选</button>
-     		<button class="ui button labeled icon" r-on="{click: onDeleteFiles}"><i class="trash icon"></i> 删除</button>
 
-        <button class="ui button" 
+     		<button class="ui icon button circular green" r-on="{click: onSelectAll}"
+          r-class="{
+            basic: !hasSelected;
+          }"
+        ><i class="check icon"></i></button>
+        <button class="ui icon circular button" r-on="{click: onSync}" title="同步文件"><i class="repeat icon"></i></button>
+     		<button class="ui icon button circular" r-on="{click: onDeleteFiles}"><i class="trash icon"></i></button>
+
+        <button class="ui button icon green labeled" r-on="{click: onShowUpload}" title="上传文件"><i class="upload icon"></i> 上传</button>
+        <button class="ui button icon" 
           r-class="{
             disabled: !hasSelected;
             orange: hasSelected;
           }"
           r-on="{click: onFastDeploy}" 
         ><i class="connectdevelop icon" r-class="{loading: hasSelected}"></i> 一键部署</button>
-        <button class="ui button" 
+        <button class="ui button labeled icon" 
           r-class="{
             disabled: !hasSelected;
-            brown: hasSelected;
+            teal: hasSelected;
           }"
           r-on="{click: onShowDeploy}" 
-        ><i class="steam icon"></i> 部署</button>
-       	<div class="ui buttons blue">
+        ><i class="steam icon"></i> 选择部署</button>
+
+
+        <div class="ui buttons blue">
           <button class="ui button icon" r-on="{click: onShowCreate}" title="创建目录"><i class="folder open icon"></i></button>
-          <button class="ui button icon" r-on="{click: onShowUpload}" title="上传文件"><i class="upload icon"></i></button>
-       		<button class="ui button icon" r-on="{click: onShowAddPath}" title="添加发布路径"><i class="send icon"></i></button>
-       		<button class="ui button icon" r-on="{click: onShowPathes}" title="管理发布路径"><i class="setting icon"></i></button>
-       	</div>
-  	  	<button class="ui icon circular basic button green" r-on="{click: onSync}" title="同步文件"><i class="repeat icon"></i></button>
+          <button class="ui button icon" r-on="{click: onShowAddPath}" title="添加发布路径"><i class="send icon"></i></button>
+          <button class="ui button icon" r-on="{click: onShowPathes}" title="管理发布路径"><i class="setting icon"></i></button>
+        </div>
+        <div class="app-name flb-p1">
+          {app_name}
+        </div>
     	</div>
 		  <div class="table-con">
 	    	<table class="ui celled striped table blue">
@@ -71,26 +81,38 @@
   			    <tr r-repeat="{files}">
   			      <td class="collapsing filecheckbox">
   			      	<div class="ui checkbox fitted" r-on="{click: onSelect}" data-index="{$index}">
-  					  <input type="checkbox" r-model="{'files.' + $index + '.selected'}">
-  					  <label></label>
-  					</div>
+      					  <input type="checkbox" r-model="{'files.' + $index + '.selected'}">
+      					  <label></label>
+      					</div>
   			      </td>
   			      <td>
   			      	<a href="javascript:;" 
   			      		data-file="{file}"
-  			      		data-type="{type}"
+  			      		data-type="dir"
   			      		r-on="{
   			        		click: onEnter
   			        	}"
+                  r-show="{type == 'dir'}"
   			      	>
-  				        <i class="icon" 
-  				        	r-class="{
-  				        		folder: type == 'dir';
-  				        		file: type !== 'dir'; 
-  				        		outline: type !== 'dir'; 
-  				        	}"
-  				        ></i> {file}
+  				        <i class="icon folder"></i> {file}
   			      	</a>
+                <a href="javascript:;" 
+                  data-file="{file}"
+                  data-type="file"
+                  r-on="{
+                    click: onOpenFile
+                  }"
+                  r-show="{type == 'file'}"
+                >
+                  <i class="icon file outline"
+                    r-class="{
+                      file: !pending;
+                      outline: !pending;
+                      spinner: pending;
+                      loading: pending;
+                    }"
+                  ></i> {file}
+                </a>
   			      </td>
   			      <td class="right aligned collapsing">{- fsize(size)}</td>
   			      <td class="right aligned collapsing">{fdate(update_time, 'YY/XMM/XDD hh:mm:ss')}</td>

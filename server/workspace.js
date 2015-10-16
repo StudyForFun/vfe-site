@@ -6,6 +6,9 @@ var path = require('path')
 var mkdirp = require('mkdirp')
 var rimraf = require('rimraf')
 var fs = require('fs')
+var tar = require('tar')
+var unzip = require('unzip')
+var targz = require('tar.gz')
 
 var root = path.join(__dirname, '../../.workspace')
 
@@ -75,17 +78,47 @@ router.delete('/ws/:app_id', function (req, res) {
 		res.json(resp(null, {}))
 	})
 })
-router.post('/ws/:app_id/:file', function (req, res) {
+/**
+ * Extract compressed file
+ */
+router.post('/ws/:app_id/extract', function (req, res) {
 	var app_id = req.params.app_id
 	var p = req.body.path || './'
-	var filename = req.body.filename
+	var filename = req.body.filename || ''
 
 	if (/\.\./.test(p) || /\.\./.test(app_id)) return req.json(resp('Unvalid path or app_id.', null, 5401))
-	var dir = path.join(root, app_id, p, filename)
-	mkdirp(dir, function (err) {
-		if (err) return res.json(resp(err))
-		res.json(resp(null, {}))
-	})
+
+	var fpath = path.join(root, app_id, p, filename)
+	if (/\.tar\.gz$/i.test(filename)) {
+		targz().extract(fpath, path.join(root, app_id, p, filename.replace(/\.tar\.gz$/, '')), function (err) {
+	   		res.json(resp(err, {}))
+		})
+	} else if (/\.zip$/i.test(filename)) {
+		fs.createReadStream(fpath)
+			.pipe(unzip.Extract({
+				path: path.join(root, app_id, p, filename.replace(/\.zip$/, ''))
+			}))
+			.on('close', function () {
+				res.json(resp(null, {}))
+		    })
+		    .on('error', function (err) {
+				res.json(resp(err || 'error'))
+		    })
+	} else if (/\.tar$/i.test(filename)) {
+		fs.createReadStream(fpath)
+			.pipe(tar.Extract({
+				path: path.join(root, app_id, p, filename.replace(/\.tar$/, '')),
+				strip: 0
+			}))
+			.on('close', function () {
+				res.json(resp(null, {}))
+		    })
+		    .on('error', function (err) {
+				res.json(resp(err || 'error'))
+		    })
+	} else {
+		res.json(resp('Unmatch file to extract.'))
+	}
 })
 
 module.exports = router

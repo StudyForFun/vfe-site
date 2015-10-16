@@ -4,3 +4,6 @@
 .p-deploy-table-con {max-height: 400px;min-height: 100px;overflow: auto}
 .p-deploy-table-con-deploy {max-height: 200px;min-height: 50px;overflow: auto;margin-bottom: 20px;}
 .p-deploy-table-con-fastdeploy {max-height: 600px;min-height: 50px;overflow: auto;margin-bottom: 10px;}
+
+.p-deploy .app-name {font-size: 25px;text-align: right;}
+.p-deploy .app-name:hover {color: #CECE28;cursor: pointer;}
