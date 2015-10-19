@@ -9,9 +9,10 @@ var fs = require('fs')
 var tar = require('tar')
 var unzip = require('unzip')
 var targz = require('tar.gz')
+var async = require('async')
+var ncp = require('ncp').ncp
 
 var root = path.join(__dirname, '../../.workspace')
-
 mkdirp.sync(root)
 function resp(err, data, code) {
 	if (err) return {error: err, code: code || 500}
@@ -119,6 +120,60 @@ router.post('/ws/:app_id/extract', function (req, res) {
 	} else {
 		res.json(resp('Unmatch file to extract.'))
 	}
+})
+/**
+ * copy file
+ */
+router.post('/ws/:app_id/copy', function (req, res) {
+	var app_id = req.params.app_id
+	var p = req.body.path || './'
+	var files = JSON.parse(req.body.files)
+	if (/\.\./.test(p) || /\.\./.test(app_id)) return req.json(resp('Unvalid path or app_id.', null, 5401))
+
+	var dest = path.join(root, app_id, req.body.dest)
+	var dir = path.join(root, app_id, p)
+
+	function isValid(src, dst) {
+		return /^\.\./.test(path.relative(src, dst))
+	}
+
+	function copy (file, cb) {
+		var src = path.join(dir, file.file)
+		var dst = path.join(dest, file.file)
+
+		// 如果是复制到子目录下要加限制
+		if(file.type == 'dir' && !isValid(src, dst)) return res.json(resp(null, 'same'))
+			
+		if (file.type == 'dir') {
+			mkdirp(dst, function (err) {
+				if (err) {
+					cb(err)
+				} else {
+					ncp(src, dst, function (err) {
+						if (err) return cb(err)
+						else return cb()
+					})
+				}
+			})
+		} else {
+			var readable = fs.createReadStream(src)
+			var writable = fs.createWriteStream(dst)
+			readable.pipe(writable)
+					.on('error', function (err) {
+						cb(err)
+					})
+					.on('close', function () {
+						cb()
+					})
+		}
+	}
+	async.each(files, function (file, cb) {
+		copy(file, function (err) {
+			cb(err)
+		})
+	}, function () {
+		res.json(resp(null, 'ok'))
+	})
 })
 
 module.exports = router
