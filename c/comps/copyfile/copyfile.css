@@ -3,5 +3,5 @@ ul.ul-file {overflow: hidden;}
 .ul-file li {float: left; width: 20%; margin: 0 auto; margin-bottom: 12px; margin-top: 10px;}
 ul-file li a{display: inline-block;}
 
-.ul-file img {margin-bottom: 5px; display: block; margin: 0 auto; width: 40%;}
-.ul-file .cont{text-align: center; margin-top: 8px; font-size: 1.1em;}
+.ul-file img {margin-bottom: 5px; display: block; margin: 0 auto; width: 36%;}
+.ul-file .cont{text-align: center; margin-top: 8px; font-size: .8em;}
