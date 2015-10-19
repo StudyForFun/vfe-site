@@ -237,7 +237,7 @@
             >关闭</button>
             <button 
                 type="submit"
-                class="ui large primary button flb-p1"
+                class="ui large button flb-p1"
                 style="margin:0;display:block" 
                 r-on="{click: onCopy}"
                 r-class="{

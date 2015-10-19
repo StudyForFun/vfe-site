@@ -350,10 +350,7 @@ module.exports = Zect.create({
 		},
 		onShowCopy: function () {
 			if(!this.getSelectedFiles().length) return
-
-			// init
-			this.$data.copyStatus = 'done'
-
+			this.$data.copyStatus = ''
 			this.$refs.copyfile.fetch()
 			this.$comps.copy.modal('show')
 		},
@@ -389,9 +386,8 @@ module.exports = Zect.create({
 				success: function (data) {
 					this.$data.copying = false
 					this.$data.copyStatus = data.data == 'ok' ? 'done' : 'error'
-					this.onHideCopy()
 					if(data.data == 'ok') {
-						alert('拷贝成功')
+						this.onHideCopy()
 					} else if(data.data == 'same') {
 						alert('拷贝失败: 不支持拷贝到其子目录下~')		
 					} else {
