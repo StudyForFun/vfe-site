@@ -1,4 +1,4 @@
-<table class="ui celled striped table blue">
+<table class="ui celled striped table blue table-file">
   <thead>
       <tr>
         <th colspan="1">
