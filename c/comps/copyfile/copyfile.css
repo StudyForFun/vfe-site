@@ -5,4 +5,4 @@ ul-file li a{display: inline-block;}
 
 .ul-file img {margin-bottom: 5px; display: block; margin: 0 auto; width: 36%;}
 .ul-file .cont{text-align: center; margin-top: 8px; font-size: 14px;}
-.ui.table.table-file{margin-bottom: 20px;}
+.ui.table.table-file{margin-bottom: 20px; min-height: 165px;}
