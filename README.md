@@ -1,5 +1,5 @@
-# vfe-init-template
-A init template that using vfe components builder.
+# vfe-site
+vfe deploy platform.
 
 ## start
 
