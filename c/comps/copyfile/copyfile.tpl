@@ -34,32 +34,22 @@
 				</p>
 			</td>
   	</tr>
-    <tr r-repeat="{files}">
+    <tr>
       <td>
-      	<a href="javascript:;" 
-      		data-file="{file}"
-      		data-type="dir"
-      		r-on="{
-        		click: onEnter
-        	}"
-          r-show="{type == 'dir'}"
-      	>
-	        <i class="icon folder"></i> {file}
-      	</a>
-        <!-- <a href="javascript:;" 
-          data-file="{file}"
-          data-type="file"
-          r-show="{type == 'file'}"
-        >
-          <i class="icon file outline"
-            r-class="{
-              file: !pending;
-              outline: !pending;
-              spinner: pending;
-              loading: pending;
-            }"
-          ></i> {file}
-        </a> -->
+        <ul class="ul-file">
+          <li r-repeat="{files}">
+            <a href="javascript:;" 
+              data-file="{file}"
+              data-type="dir"
+              r-on="{
+                click: onEnter
+              }"
+              r-show="{type == 'dir'}"
+            >
+              <img src="/asserts/images/file.png">
+              <div class="cont">{file}</div>
+            </a></li>
+        </ul>
       </td>
     </tr>
   </tbody>

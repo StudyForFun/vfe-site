@@ -133,11 +133,16 @@ router.post('/ws/:app_id/copy', function (req, res) {
 	var dest = path.join(root, app_id, req.body.dest)
 	var dir = path.join(root, app_id, p)
 
+	function isValid(src, dst) {
+		return /^\.\./.test(path.relative(src, dst))
+	}
+
 	function copy (file, cb) {
 		var src = path.join(dir, file.file)
 		var dst = path.join(dest, file.file)
 
-		if(src === dest) return res.json(resp(null, 'same'))
+		// 如果是复制到子目录下要加限制
+		if(file.type == 'dir' && !isValid(src, dst)) return res.json(resp(null, 'same'))
 			
 		if (file.type == 'dir') {
 			mkdirp(dst, function (err) {
@@ -145,11 +150,8 @@ router.post('/ws/:app_id/copy', function (req, res) {
 					cb(err)
 				} else {
 					ncp(src, dst, function (err) {
-						if (err) {
-							cb(err)
-						} else {
-							cb()
-						}
+						if (err) return cb(err)
+						else return cb()
 					})
 				}
 			})

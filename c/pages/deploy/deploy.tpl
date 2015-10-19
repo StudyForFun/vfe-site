@@ -246,7 +246,7 @@
                   error: copyStatus == 'error';
                   green: copyStatus == 'done';
                 }" 
-            >{'粘贴到当前目录'+(copyStatus ? (copyStatus == 'error' ? '失败':'成功') : '')}</button>
+            >{'粘贴到当前目录'+(copyStatus ? (copyStatus == 'error' ? '失败' : '') : '')}</button>
           </div>  
       </div>
     </div>

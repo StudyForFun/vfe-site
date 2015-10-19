@@ -24,20 +24,16 @@ module.exports = Zect.component('c-copyfile', {
 				method: 'GET',
 				success: function (data) {
 					if (data && !data.error) {
-						this.$data.files = data.data.sort(function (a, b) {
-							var atype = a.type == 'dir' ? 1 : 0 
-							var btype = b.type == 'dir' ? 1 : 0 
-							if (atype > btype) return -1
-							else if (atype < btype) return 1
-							else {
-								if (a.update_time > b.update_time) return -1
-								else if (a.update_time < b.update_time) return 1
-								else return 0
+						var arr = []
+						data.data.forEach(function (e) {
+							if(e.type == 'dir') {
+								arr.push(e)
 							}
-						}).map(function (item) {
-							item.selected = false
-							item.pending = false
-							return item
+						})
+						this.$data.files = arr.sort(function (a, b) {
+							if (a.update_time > b.update_time) return -1
+							else if (a.update_time < b.update_time) return 1
+							else return 0
 						})
 					}
 				}.bind(this)
