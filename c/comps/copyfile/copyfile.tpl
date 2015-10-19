@@ -47,7 +47,7 @@
               r-show="{type == 'dir'}"
             >
               <img src="/asserts/images/file.png">
-              <div class="cont">{file}</div>
+              <div title="{file}" class="cont">{file}</div>
             </a></li>
         </ul>
       </td>
