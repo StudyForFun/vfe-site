@@ -1,4 +1,6 @@
 *.log
+*.out
+*.pid
 node_modules
 release
 .workspace
