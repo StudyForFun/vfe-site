@@ -40,7 +40,7 @@ module.exports = Zect.create({
 			})
 		},
 		onAdd: function () {
-			var port
+			var port = 8001
 			this.$data.ports.some(function (item) {
 				if (port && port != item.port) return true
 				else {
