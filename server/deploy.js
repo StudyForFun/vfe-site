@@ -18,7 +18,9 @@ function UUID(){
 mkdirp.sync(tmpDir)
 router.post('/deploy/:app_id', function (req, res) {
 
-	var archive = archiver.create('tar', {})
+	var archive = archiver.create('tar', {
+		mode: 511
+	})
 	var files = JSON.parse(req.body.files)
 	var dir = decodeURIComponent(req.body.path || './')
 	var releaseDir = decodeURIComponent(req.body.release || '')
