@@ -5,6 +5,11 @@ var path = require('path')
 var bodyParser = require('body-parser')
 var app = express()
 
+
+process.on('uncaughtException', function (err) {
+    console.error('[APP] Uncaught Error:\n', err, err.stack || '')
+});
+
 /**
  *  static folder
  **/

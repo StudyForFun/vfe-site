@@ -45,7 +45,9 @@ gulp.task('pack', function () {
 					'node_modules/tar/**/*', 'node_modules/unzip/**/*', 'node_modules/tar.gz/**/*'
 				], {base: '.'})
         	   .pipe(gulp.dest('packages/vfe-site-release'))
-        	   .pipe(tar('vfe-site_' + dateFormat(new Date, "yyyy-mm-dd-HH-MM") + '.tar'))
+        	   .pipe(tar('vfe-site_' + dateFormat(new Date, "yyyy-mm-dd-HH-MM") + '.tar', {
+        	   		mode: 511
+        	   }))
         	   .pipe(gzip())
         	   .pipe(gulp.dest('packages'))
 })
