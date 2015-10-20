@@ -3,3 +3,4 @@
 .p-port .slogan {line-height: 36px;font-size:20px;color: #333}
 .p-port .ports {padding: 20px;padding-top: 0;}
 .p-port .ports>table {min-height: 100px;}
+.p-port .slogan:hover{color: greenyellow}

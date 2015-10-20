@@ -3,10 +3,10 @@
       <div class="flb-box"
           style="margin: 20px;" 
       >
-          <div class="flb-box">
+          <a href="/" class="flb-box">
             <img src="/asserts/images/video.png" class="logo">
             <div class="slogan">Used ports of ChiTu server.</div>
-          </div>
+          </a>
           <div class="flb-p1"></div>
           <button class="ui icon button blue basic circular" style="margin-right: 20px;"
               r-on="{click: onAdd}"
