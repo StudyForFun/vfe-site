@@ -9,7 +9,8 @@ Zect.namespace('r')
 var pages = {
 	index: require('pages/index'),
 	deploy: require('pages/deploy'),
-	remote: require('pages/remote')
+	remote: require('pages/remote'),
+	port: require('pages/port')
 }
 module.exports = window.boot = function () {
 	var route = location.pathname.match(/^\/p\/(\w+)/)

@@ -283,7 +283,8 @@
                             error: $value.status == 'error';
                           }"
                         >
-                          <textarea rows="2" 
+                          <textarea 
+                            rows="2" 
                             style="font-size: 12px;line-height:12px;margin-top: 0px; margin-bottom: 0px; height: 60px;width:200px;"
                             placeholder="[(dir|file): ] <RegExp>"
                             data-id="{_id}"

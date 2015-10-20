@@ -1,1 +1,2 @@
-forever -a --uid "vfe-site" node ./server.js
+appid="vfe-site" nohup node server.js &
+echo $! > _nohup.pid
