@@ -4,5 +4,6 @@ ul.ul-file {overflow: hidden;}
 ul-file li a{display: inline-block;}
 
 .ul-file img {margin-bottom: 5px; display: block; margin: 0 auto; width: 36%;}
-.ul-file .cont{text-align: center; margin-top: 8px; font-size: 14px;}
-.ui.table.table-file{margin-bottom: 20px;}
+.ul-file .cont{text-align: center; margin-top: 8px; font-size: 14px; height: 38px; overflow: hidden;text-overflow: ellipsis;display: -webkit-box;
+-webkit-line-clamp: 2;-webkit-box-orient: vertical; word-break: break-all;}
+.ui.table.table-file{margin-bottom: 20px; min-height: 165px;}

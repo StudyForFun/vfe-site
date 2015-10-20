@@ -218,7 +218,7 @@
       </div>
     </div>
      <div class="ui small modal copy">
-      <div class="header">拷贝到</div>
+      <div class="header">选择目录</div>
       <div class="content">
           <div r-component="c-copyfile"
             r-ref="copyfile"
@@ -237,7 +237,7 @@
             >关闭</button>
             <button 
                 type="submit"
-                class="ui large primary button flb-p1"
+                class="ui large button flb-p1"
                 style="margin:0;display:block" 
                 r-on="{click: onCopy}"
                 r-class="{
@@ -246,7 +246,7 @@
                   error: copyStatus == 'error';
                   green: copyStatus == 'done';
                 }" 
-            >{'粘贴到当前目录'+(copyStatus ? (copyStatus == 'error' ? '失败' : '') : '')}</button>
+            >拷贝到此</button>
           </div>  
       </div>
     </div>
