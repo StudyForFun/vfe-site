@@ -9,6 +9,7 @@
           </a>
           <div class="flb-p1"></div>
           <button class="ui icon button blue basic circular" style="margin-right: 20px;"
+              title="新增一项" 
               r-on="{click: onAdd}"
           >
             <i class="add icon"></i>
@@ -33,7 +34,7 @@
                 <td class="">
                   <div class="ui form">
                     <div class="field small">
-                      <input type="text" r-model="port" placeholder="port" style="min-width: 80px;" />
+                      <input type="text" r-model="port" placeholder="port" style="min-width: 70px;" />
                     </div>
                   </div>
                 </td>
@@ -61,19 +62,25 @@
                     </div>
                   </div>
                 </td>
-                <td class="collapsing" style="min-width: 120px;">
+                <td class="collapsing">
                   <div class="ui form">
                     <div class="field small">
-                      <input type="text" r-model="users" placeholder="逗号分隔" style="min-width: 180px;" />
+                      <input type="text" r-model="users" placeholder="逗号分隔" style="min-width: 140px;" />
                     </div>
                   </div>
                 </td>
                 <td class="collapsing">
-                  <button class="ui button green tiny icon circular" r-show="{!pending}" r-on="{click: onSubmit}"><i class="icon send"></i></button>
-                  <button class="ui button green tiny icon circular" r-show="{pending}"><i class="icon spinner loading"></i></button>
+                  <button class="ui button green tiny icon circular" r-show="{!pending}" r-on="{click: onSubmit}" title="确定提交添加">
+                    <i class="icon send"></i>
+                  </button>
+                  <button class="ui button green tiny icon circular" r-show="{pending}">
+                    <i class="icon spinner loading"></i>
+                  </button>
                 </td>
                 <td class="collapsing">
-                  <button class="ui button tiny icon circular" r-show="{!pending}" r-on="{click: onCancel}"><i class="icon remove"></i></button>
+                  <button class="ui button tiny icon circular" r-show="{!pending}" r-on="{click: onCancel}" title="取消添加">
+                    <i class="icon remove"></i>
+                  </button>
                 </td>
             </tr>
             <tr r-repeat="{ports}">
@@ -120,16 +127,16 @@
                     </div>
                 </td>
                 <!-- 负责人 -->
-                <td class="collapsing" style="min-width: 120px;">
+                <td class="collapsing" style="min-width: 90px;">
                   <span r-show="{status != 'edit'}">{- formatUsers(users)}</span>
                   <div class="ui form" r-show="{status == 'edit'}">
                     <div class="field small">
-                      <input type="text" r-model="{'ports.' + $index + '.users'}" placeholder="逗号分隔" style="min-width: 180px;" />
+                      <input type="text" r-model="{'ports.' + $index + '.users'}" placeholder="逗号分隔" style="min-width: 140px;" />
                     </div>
                   </div>
                 </td>
                 <td class="collapsing">
-                  <a href="javascript:;">
+                  <a href="javascript:;" title="{status == 'edit' ? '确定提交' : '编辑该项'}">
                     <i class="icon blue" data-id="{_id}" 
                       r-on="{click: onEdit.bind(null, _id)}"
                       r-class="{
@@ -140,7 +147,7 @@
                   </a>
                 </td>
                 <td class="collapsing">
-                  <a href="javascript:;" r-on="{click: onDelete.bind(null, $value)}">
+                  <a href="javascript:;" r-on="{click: onDelete.bind(null, $value)}" title="删除该项">
                     <i class="icon trash blue" data-id="{_id}"></i>
                   </a>
                 </td>
