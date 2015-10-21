@@ -18,10 +18,12 @@
         <table class="ui celled striped table blue" >
           <thead>
             <tr>
+                <th></th>
                 <th>端口</th>
                 <th>名称</th>
                 <th>赤兔地址</th>
-                <th>描述/服务器</th>
+                <th>描述</th>
+                <th>负责人</th>
                 <th colspan="2"></th>
             </tr>
           </thead>
@@ -67,9 +69,10 @@
                 </td>
             </tr>
             <tr r-repeat="{ports}">
+                <td class="collapsing">{$index + 1}</td>
                 <td class="collapsing">
                   <span style="color:green;font-weight:900;" r-show="{status != 'edit'}">
-                    <i class="icon circle thin green"></i> {port}
+                    {port}
                   </span>
                   <div class="ui form" r-show="{status == 'edit'}">
                     <div class="field small">
@@ -101,10 +104,22 @@
                   </span>
                   <div class="ui form" r-show="{status == 'edit'}">
                       <div class="field small">
-                        <input type="text" r-model="{'ports.' + $index + '.desc'}" placeholder="desc"/>
+                        <textarea cols="30" rows="10" placeholder="描述..."
+                            r-model="{'ports.' + $index + '.desc'}"
+                            style="font-size: 12px;line-height:12px;margin-top: 0px; margin-bottom: 0px; height: 37px;min-width:200px;"
+                        ></textarea>
                       </div>
                     </div>
-                </td> 
+                </td>
+                <!-- 负责人 -->
+                <td class="collapsing" style="min-width: 120px;">
+                  <span r-show="{status != 'edit'}">{- formatUsers(users)}</span>
+                  <div class="ui form" r-show="{status == 'edit'}">
+                    <div class="field small">
+                      <input type="text" r-model="{'ports.' + $index + '.users'}" placeholder="逗号分隔" style="min-width: 180px;" />
+                    </div>
+                  </div>
+                </td>
                 <td class="collapsing">
                   <a href="javascript:;">
                     <i class="icon blue" data-id="{_id}" 

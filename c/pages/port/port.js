@@ -9,6 +9,7 @@ module.exports = Zect.create({
 			name: '',
 			desc: '',
 			link: '',
+			users: '',
 			ports: [],
 			editing: false,
 			pending: false
@@ -39,6 +40,13 @@ module.exports = Zect.create({
 				}.bind(this)
 			})
 		},
+		formatUsers: function (users) {
+			if (!users) return ''
+			return users.split(/\s*[,，]\s*/).map(function (item) {
+				console.log(item)
+				return '<i class="icon linux teal"></i>' +  item
+			}).join(' ')
+		},
 		onAdd: function () {
 			var port = 8001
 			this.$data.ports.some(function (item) {
@@ -63,6 +71,7 @@ module.exports = Zect.create({
 			var name = this.$data.name
 			var desc = this.$data.desc
 			var link = this.$data.link
+			var users = this.$data.users
 			var matched
 			if (!/^\d+$/.test(port)) {
 				return alert('端口不合法，请重新输入')
@@ -83,6 +92,7 @@ module.exports = Zect.create({
 					port: port,
 					name: name || '',
 					desc: desc || '',
+					users: users || '',
 					link: link || ''
 				},
 				success: function (data) {
@@ -91,6 +101,7 @@ module.exports = Zect.create({
 						port: '',
 						name: '',
 						desc: '',
+						users: '',
 						link: ''
 					}
 					this.$data.editing = false
@@ -131,6 +142,7 @@ module.exports = Zect.create({
 				var name = target.name
 				var desc = target.desc
 				var link = target.link
+				var users = target.users
 				var matched
 
 				if (!/^\d+$/.test(port)) {
@@ -150,10 +162,11 @@ module.exports = Zect.create({
 					url: '/classes/port/' + target._id + '?_app_id=_global',
 					method: 'PATCH',
 					data: {
-						desc: desc,
+						port: port,
 						name: name,
-						link: link,
-						port: port
+						desc: desc || '',
+						link: link || '',
+						users: users || ''
 					},
 					success: function (data) {
 						if (data.error) {
