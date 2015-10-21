@@ -29,6 +29,7 @@
           </thead>
           <tbody>
             <tr r-if="{editing}">
+                <td></td>
                 <td class="">
                   <div class="ui form">
                     <div class="field small">
@@ -57,6 +58,13 @@
                           r-model="desc"
                           style="font-size: 12px;line-height:12px;margin-top: 0px; margin-bottom: 0px; height: 37px;width:200px;"
                       ></textarea>
+                    </div>
+                  </div>
+                </td>
+                <td class="collapsing" style="min-width: 120px;">
+                  <div class="ui form">
+                    <div class="field small">
+                      <input type="text" r-model="users" placeholder="逗号分隔" style="min-width: 180px;" />
                     </div>
                   </div>
                 </td>
@@ -89,7 +97,7 @@
                   </div>
                 </td>
                 <td class="aligned">
-                    <a href="{link}" target="_blank" r-show="{status != 'edit'}">
+                    <a href="{/^https?\:\/\//.test(link) ? link : 'javascript:;'}" target="_blank" r-show="{status != 'edit'}">
                         <i class="icon linkify"></i> {link}
                     </a>
                     <div class="ui form" r-show="{status == 'edit'}">
@@ -100,7 +108,7 @@
                 </td>
                 <td>
                   <span r-show="{status != 'edit'}">
-                    {desc}
+                    {- formatChangeLine(desc)}
                   </span>
                   <div class="ui form" r-show="{status == 'edit'}">
                       <div class="field small">

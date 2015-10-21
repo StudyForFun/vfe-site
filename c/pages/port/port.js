@@ -34,6 +34,7 @@ module.exports = Zect.create({
 							else return 0
 						}).map(function (item) {
 							item.status = ''
+							item.users = item.users || ''
 							return item
 						})
 					}
@@ -46,6 +47,9 @@ module.exports = Zect.create({
 				console.log(item)
 				return '<i class="icon linux teal"></i>' +  item
 			}).join(' ')
+		},
+		formatChangeLine: function (text) {
+			return text.replace(/\r?\n/g, '<br />')
 		},
 		onAdd: function () {
 			var port = 8001
