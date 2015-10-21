@@ -3,7 +3,7 @@
       <div class="flb-box"
           style="margin: 20px;" 
       >
-          <a href="/" class="flb-box">
+          <a href="/" class="flb-box" title="点击返回首页">
             <img src="/asserts/images/video.png" class="logo">
             <div class="slogan">Used ports of ChiTu server.</div>
           </a>

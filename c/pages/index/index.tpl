@@ -6,15 +6,15 @@
             <img src="/asserts/images/video.png" class="logo">
             <div class="slogan">Deploy, make easy.</div>
             <div class="flb-p1"></div>
-            <a class="ui icon button green basic circular" style="margin-right: 20px;" href="/p/port">
+            <a class="ui icon button green basic circular" style="margin-right: 20px;" href="/p/port" title="Node应用端口分配">
               <i class="at icon"></i>
             </a>
-            <button class="ui icon button blue basic circular" style="margin-right: 20px;"
+            <button class="ui icon button blue basic circular" style="margin-right: 20px;" title="创建新的部署应用" 
                 r-on="{click: onShowCreate}"
             >
               <i class="add icon"></i>
             </button>
-            <button class="ui icon button blue basic circular" style="margin-right: 20px;"
+            <button class="ui icon button blue basic circular" style="margin-right: 20px;" title="添加发布服务器地址" 
                 r-on="{click: onShowAddAgent}"
             >
               <i class="sitemap icon"></i>
