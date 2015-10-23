@@ -46,7 +46,7 @@
 	    	<table class="ui celled striped table blue">
   			  <thead>
   			    <tr>
-  				    <th colspan="5">
+  				    <th colspan="6">
   					    <div class="ui breadcrumb">
   						  <a class="section" href="javascript:;" r-on="{click: onRoot}"><i class="icon windows"></i></a>
   						  <div class="divider"> / </div>
@@ -126,6 +126,44 @@
   			      		<i class="ui icon trash outline"></i>
   			      	</a>
   			      </td>
+              <td class="collapsing center">
+                <a href="{'/ws/'+app_id+'/download?path='+encodeURIComponent('/'+pathes.join('/'))
+                        +'&filename='+encodeURIComponent(file)+'&type=file'}" 
+                    target="_blank" 
+                    download="{file}"
+                    r-show="{type == 'file'}"
+                >
+                  <i class="ui icon download"></i>
+                </a>
+                <a href="{'/ws/'+app_id+'/download?path='+encodeURIComponent('/'+pathes.join('/'))
+                        +'&filename='+encodeURIComponent(file)+'&type=dir&ext=tar'}" 
+                    target="_blank" 
+                    download="{file + '.tar'}"
+                    r-show="{type == 'dir'}"
+                >
+                  ta
+                </a>
+                <span r-show="{type == 'dir'}">/</span>
+                <a href="{'/ws/'+app_id+'/download?path='+encodeURIComponent('/'+pathes.join('/'))
+                        +'&filename='+encodeURIComponent(file)+'&type=dir&ext=zip'}" 
+                    target="_blank" 
+                    download="{file + '.zip'}"
+                    r-show="{type == 'dir'}"
+                    style="" 
+                >
+                  zp
+                </a>
+                <span r-show="{type == 'dir'}">/</span>
+                <a href="{'/ws/'+app_id+'/download?path='+encodeURIComponent('/'+pathes.join('/'))
+                        +'&filename='+encodeURIComponent(file)+'&type=dir&ext=tar.gz'}" 
+                    target="_blank" 
+                    download="{file + '.tar.gz'}"
+                    r-show="{type == 'dir'}"
+                    style="" 
+                >
+                  tg
+                </a>
+              </td>
   			    </tr>
   			  </tbody>
   			</table>

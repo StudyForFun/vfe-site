@@ -25,7 +25,7 @@ app.use(require('./server/api'))
 app.use(require('./server/workspace'))
 app.use(require('./server/upload'))
 app.use(require('./server/deploy'))
-app.use(require('./server/proxy'))
+app.use(require('./server/remote'))
 
 /**
  *  server and port

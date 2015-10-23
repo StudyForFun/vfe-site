@@ -137,7 +137,7 @@
                     </div>
                   </div>
                 </td>
-                <td class="collapsing">
+                <td class="collapsing center">
                   <a href="javascript:;" title="{status == 'edit' ? '确定提交' : '编辑该项'}">
                     <i class="icon blue" data-id="{_id}" 
                       r-on="{click: onEdit.bind(null, _id)}"
@@ -148,7 +148,7 @@
                     ></i>
                   </a>
                 </td>
-                <td class="collapsing">
+                <td class="collapsing center">
                   <a href="javascript:;" r-on="{click: onDelete.bind(null, $value)}" title="删除该项">
                     <i class="icon trash blue" data-id="{_id}"></i>
                   </a>

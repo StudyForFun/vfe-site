@@ -44,7 +44,6 @@ module.exports = Zect.create({
 		formatUsers: function (users) {
 			if (!users) return ''
 			return users.split(/\s*[,，]\s*/).map(function (item) {
-				console.log(item)
 				return '<i class="icon linux teal"></i>' +  item
 			}).join(' ')
 		},

@@ -7,3 +7,4 @@
 
 .p-deploy .app-name {font-size: 25px;text-align: right;}
 .p-deploy .app-name:hover {color: #CECE28;cursor: pointer;}
+.p-deploy td.center {text-align: center;}

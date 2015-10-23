@@ -11,8 +11,9 @@ var unzip = require('unzip')
 var targz = require('tar.gz')
 var async = require('async')
 var ncp = require('ncp').ncp
-
+var archiver = require('archiver')
 var root = path.join(__dirname, '../../.workspace')
+
 mkdirp.sync(root)
 function resp(err, data, code) {
 	if (err) return {error: err, code: code || 500}
@@ -175,5 +176,31 @@ router.post('/ws/:app_id/copy', function (req, res) {
 		res.json(resp(null, 'ok'))
 	})
 })
+router.get('/ws/:app_id/download', function (req, res) {
+	var app_id = req.params.app_id
+	var p = decodeURIComponent(req.query.path) || './'
+	var filename = decodeURIComponent(req.query.filename)
+	var type = req.query.type
+	var ext = req.query.ext
 
+	if (/\.\./.test(p) || /\.\./.test(app_id) || /\.\./.test(filename)) return req.json(resp('Unvalid path or app_id.', null, 5401))
+	var fpath = path.join(root, app_id, p, filename)
+	if (type == 'dir') {
+		var acOpts = {
+			mode: 511
+		}
+		if (ext == 'tar.gz') {
+			acOpts.gzip = true
+			acOpts.gzipOptions = {
+				level: 1
+			}
+		}
+		var archive = archiver.create(ext == 'zip' ? 'zip' : 'tar', acOpts)
+		archive.directory(fpath, filename)
+			   .pipe(res)
+	 	archive.finalize()
+	} else {
+		res.download(fpath, filename)
+	}
+})
 module.exports = router

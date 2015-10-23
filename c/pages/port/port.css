@@ -7,3 +7,4 @@
 	background-color: #f0f0f0;border-bottom-left-radius: 8px;border-bottom-right-radius: 8px;}
 
 .p-port .limit {max-width: 200px;word-break: break-all;white-space: normal;}
+.p-port td.center {text-align: center;}
