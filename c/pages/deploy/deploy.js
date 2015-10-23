@@ -273,14 +273,15 @@ module.exports = Zect.create({
 			this.$comps.addPath.modal('hide')
 		},
 		onAddPath: function () {
-			if (!this.$data.path) return
+			var path = (this.$data.path || '').trim()
+			if (!path) return
 
 			$.ajax({
 				url: '/classes/path?_app_id=' + this.$data.app_id,
 				method: 'POST',
 				data: {
 					host: this.$refs.agentSelection.val(),
-					path: this.$data.path,
+					path: path,
 					desc: this.$data.path_desc
 				},
 				success: function (data) {

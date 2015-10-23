@@ -96,15 +96,16 @@ module.exports = Zect.create({
 			this.$comps.addAgent.modal('hide')
 		},
 		onAddAgent: function () {
-			console.log(this.$data.agent_host, this.$data.agent_port)
-			if (!this.$data.agent_host || !this.$data.agent_port) return
+			var host = (this.$data.agent_host || '').trim()
+			var port = (this.$data.agent_port || '').trim()
+			if (!host || !port) return
 
 			$.ajax({
 				url: '/classes/agent?_app_id=_global',
 				method: 'POST',
 				data: {
-					host: this.$data.agent_host,
-					port: this.$data.agent_port
+					host: host,
+					port: port
 				},
 				success: function (data) {
 					this.$data.agents.push(data.data)
@@ -119,23 +120,22 @@ module.exports = Zect.create({
 		onHideAddPath: function () {
 			this.$comps.addPath.modal('hide')
 		},
-		onAddPath: function () {
-			if (!this.$data.path) return
-
-			$.ajax({
-				url: '/classes/path?_app_id=_global',
-				method: 'POST',
-				data: {
-					host: this.$refs.agentSelection.val(),
-					path: this.$data.path,
-					desc: this.$data.path_desc
-				},
-				success: function (data) {
-					this.$data.pathes.push(data.data)
-					this.$comps.addPath.modal('hide')
-				}.bind(this)
-			})
-		},
+		// onAddPath: function () {
+		// 	if (!this.$data.path) return
+		// 	$.ajax({
+		// 		url: '/classes/path?_app_id=_global',
+		// 		method: 'POST',
+		// 		data: {
+		// 			host: this.$refs.agentSelection.val(),
+		// 			path: this.$data.path,
+		// 			desc: this.$data.path_desc
+		// 		},
+		// 		success: function (data) {
+		// 			this.$data.pathes.push(data.data)
+		// 			this.$comps.addPath.modal('hide')
+		// 		}.bind(this)
+		// 	})
+		// },
 		onShowPathes: function () {
 			this.$comps.pathesMan.modal('show')
 		},
