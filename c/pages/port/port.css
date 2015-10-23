@@ -1,6 +1,9 @@
-.p-port .table-con {margin: 10px 20px;position: absolute;bottom: 0;left: 0;right: 0;overflow: auto;top: 78px;}
 .p-port .logo {width: 36px;display: block;vertical-align: baseline;box-sizing: border-box;margin-right: 20px;}
 .p-port .slogan {line-height: 36px;font-size:20px;color: #333}
 .p-port .ports {padding: 20px;padding-top: 0;}
 .p-port .ports>table {min-height: 100px;}
 .p-port .slogan:hover{color: greenyellow}
+.p-port .ports {position: absolute;bottom: 0;left: 0;right: 0;margin: auto;overflow: auto;top: 70px;
+	background-color: #f0f0f0;border-bottom-left-radius: 8px;border-bottom-right-radius: 8px;}
+
+.p-port .limit {max-width: 200px;word-break: break-all;white-space: normal;}

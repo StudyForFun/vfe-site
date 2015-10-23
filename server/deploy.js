@@ -45,7 +45,7 @@ router.post('/deploy/:app_id', function (req, res) {
 						file: fp,
   						content_type: 'application/tar'
   					}
-				}, { multipart: true }, function (err) {
+				}, { multipart: true, open_timeout: 30000}, function (err) {
 					if (err) return res.send(err)
 					fs.unlink(fp, function () {
 						res.send('ok')

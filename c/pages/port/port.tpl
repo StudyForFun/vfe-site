@@ -16,7 +16,7 @@
           </button>
       </div>
       <div class="ports">
-        <table class="ui celled striped table blue" >
+        <table class="ui celled striped table blue" style="margin-top:20px;">
           <thead>
             <tr>
                 <th></th>
@@ -34,30 +34,30 @@
                 <td class="">
                   <div class="ui form">
                     <div class="field small">
-                      <input type="text" r-model="port" placeholder="port" style="min-width: 70px;" />
+                      <input type="text" r-model="port" placeholder="port" style="min-width: 60px;"/>
                     </div>
                   </div>
                 </td>
                 <td class="">
                   <div class="ui form">
                     <div class="field">
-                      <input type="text" class="name-inp" r-model="name" placeholder="name" style="min-width: 120px;" />
+                      <input type="text" class="name-inp" r-model="name" placeholder="name"/>
                     </div>
                   </div>
                 </td>
-                <td>
-                  <div class="ui form">
+                <td class="collapsing">
+                  <div class="ui form limit">
                     <div class="field tiny">
                       <input type="text" r-model="link" placeholder="链接..." />
                     </div>
                   </div>
                 </td>
-                <td class="">
+                <td class="limit">
                   <div class="ui form">
                     <div class="field tiny">
                       <textarea cols="30" rows="10" placeholder="描述..."
                           r-model="desc"
-                          style="font-size: 12px;line-height:12px;margin-top: 0px; margin-bottom: 0px; height: 37px;width:200px;"
+                          style="font-size: 12px;line-height:12px;margin-top: 0px; margin-bottom: 0px; height: 37px;min-width:150px;"
                       ></textarea>
                     </div>
                   </div>
@@ -103,8 +103,10 @@
                     </div>
                   </div>
                 </td>
-                <td class="aligned">
-                    <a href="{/^https?\:\/\//.test(link) ? link : 'javascript:;'}" target="_blank" r-show="{status != 'edit'}">
+                <td class="collapsing aligned limit" style="min-width: 200px;">
+                    <a href="{/^https?\:\/\//.test(link) ? link : 'javascript:;'}" target="_blank" r-show="{status != 'edit'}"
+                      style="white-space: normal" 
+                    >
                         <i class="icon linkify"></i> {link}
                     </a>
                     <div class="ui form" r-show="{status == 'edit'}">
@@ -113,7 +115,7 @@
                       </div>
                     </div>
                 </td>
-                <td>
+                <td class="limit">
                   <span r-show="{status != 'edit'}">
                     {- formatChangeLine(desc)}
                   </span>
@@ -121,13 +123,13 @@
                       <div class="field small">
                         <textarea cols="30" rows="10" placeholder="描述..."
                             r-model="{'ports.' + $index + '.desc'}"
-                            style="font-size: 12px;line-height:12px;margin-top: 0px; margin-bottom: 0px; height: 37px;min-width:200px;"
+                            style="font-size: 12px;line-height:12px;margin-top: 0px; margin-bottom: 0px; height: 37px;min-width:150px;"
                         ></textarea>
                       </div>
                     </div>
                 </td>
                 <!-- 负责人 -->
-                <td class="collapsing" style="min-width: 90px;">
+                <td class="collapsing limit" style="min-width: 90px;">
                   <span r-show="{status != 'edit'}">{- formatUsers(users)}</span>
                   <div class="ui form" r-show="{status == 'edit'}">
                     <div class="field small">
