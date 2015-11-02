@@ -8,11 +8,11 @@ var path = require('path')
 mkdirp.sync(path.join(process.cwd(), '../.dbs'))
 var appdb = new Datastore({ filename: '../.dbs/app', autoload: true})
 var classdb = new Datastore({ filename: '../.dbs/class', autoload: true})
-var COMPACT_INTER = 10*1000
+var COMPACT_INTER = 20*1000
 
 appdb.persistence.setAutocompactionInterval(COMPACT_INTER)
 classdb.persistence.setAutocompactionInterval(COMPACT_INTER)
-classdb.ensureIndex({fieldName: '_app_id'})
+// classdb.ensureIndex({fieldName: '_app_id'})
 
 function resp(err, data, code) {
 	if (err) return {error: err, code: code || 500}
