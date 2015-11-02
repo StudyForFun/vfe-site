@@ -67,21 +67,28 @@ router.post('/deploy/:app_id/cli', multipart({
 	var releaseDir = decodeURIComponent(req.query.path)
 	var autoDeploy = req.query.auto && req.query.auto !== 'false'
 	var uploadPath = req.query.upload_path || './'
+	var timeout = req.query.timeout ? Number(req.query.timeout) : 10*1000
+	var retries = req.query.retries || 5
 	var fp = file.path
 
-	if (autoDeploy) {
+	function deploy() {
 		needle.post('http://' + releaseHost + '/?path=' + encodeURIComponent(releaseDir), {
 			'file[0]': {
 				file: fp,
 				content_type: 'application/x-gzip'
 			}
-		}, { multipart: true, open_timeout: 30000 }, function (err, r, data) {
+		}, { multipart: true, open_timeout: timeout }, function (err, r, data) {
 			fs.unlink(fp, function () {
+				if ((err || data.error) && retries --) return deploy() 
 				if (err) return res.send(err)
 				else if (data.error) return res.send('deploy error !')
 				res.send('ok')
 			})
 		})
+	}
+	if (autoDeploy) {
+		// retry when match error
+		deploy()
 	} else {
 		var dir = path.join(wsDir, req.params.app_id, uploadPath)
 		var callbacked
