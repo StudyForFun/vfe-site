@@ -183,7 +183,9 @@ router.get('/ws/:app_id/download', function (req, res) {
 	var type = req.query.type
 	var ext = req.query.ext
 
-	if (/\.\./.test(p) || /\.\./.test(app_id) || /\.\./.test(filename)) return req.json(resp('Unvalid path or app_id.', null, 5401))
+	if (/\.\./.test(p) || /\.\./.test(app_id) || /\.\./.test(filename)) 
+		return req.json(resp('Unvalid path or app_id.', null, 5401))
+
 	var fpath = path.join(root, app_id, p, filename)
 	if (type == 'dir') {
 		var acOpts = {
