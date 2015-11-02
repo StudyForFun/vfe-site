@@ -68,7 +68,7 @@ router.post('/deploy/:app_id/cli', multipart({
 	var autoDeploy = req.query.auto && req.query.auto !== 'false'
 	var uploadPath = req.query.upload_path || './'
 	var timeout = req.query.timeout ? Number(req.query.timeout) : 10*1000
-	var retries = req.query.retries || 5
+	var retries = req.query.retries ? Number(req.query.retries) : 5
 	var fp = file.path
 
 	function deploy() {
@@ -78,8 +78,9 @@ router.post('/deploy/:app_id/cli', multipart({
 				content_type: 'application/x-gzip'
 			}
 		}, { multipart: true, open_timeout: timeout }, function (err, r, data) {
+			if ((err || data.error) && retries --) return deploy()
+
 			fs.unlink(fp, function () {
-				if ((err || data.error) && retries --) return deploy() 
 				if (err) return res.send(err)
 				else if (data.error) return res.send('deploy error !')
 				res.send('ok')
