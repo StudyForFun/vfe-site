@@ -22,7 +22,7 @@ mkdirp.sync(tmpDir)
 router.post('/deploy/:app_id', function (req, res) {
 
 	var archive = archiver.create('tar', {
-		mode: 755
+		mode: parseInt('0777', 8)
 	})
 	var files = JSON.parse(req.body.files)
 	var dir = decodeURIComponent(req.body.path || './')

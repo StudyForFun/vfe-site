@@ -7,6 +7,7 @@ var watch = require('gulp-watch')
 var tar = require('gulp-tar')
 var gzip = require('gulp-gzip')
 var inject = require('gulp-inject')
+var vdeploy = require('vfe-deploy')
 var dateFormat = require('dateformat')
 var meta = require('./package.json')
 
@@ -18,7 +19,7 @@ var release_dir = './release'
 var config = {
 	html: 'views/index.html',
 	source: ['views/**', COMPONENT_MODULES + '/**'],
-	js_cdn: '',
+	prefix: '',
 }
 
 
@@ -28,7 +29,7 @@ var config = {
  * @cli vfe release --> start: "release"
  */
 gulp.task('default', ['clean'], build({ minify: false }))
-gulp.task('release', ['clean'], build({ prefix: config.js_cdn }))
+gulp.task('release', ['clean'], build({ prefix: config.prefix }))
 gulp.task('clean', function () {
 	return gulp.src(release_dir, { read: false }).pipe(vfe.clean())
 })
@@ -39,19 +40,13 @@ gulp.task('watch', function () {
 		})
 	}))
 })
-gulp.task('pack', function () {
-	return gulp.src([
-					'./c/**/*', './release/**/*', './server/**/*', './views/**/*', 'server.js', 'package.json', './*.sh',
-					'node_modules/tar/**/*', 'node_modules/unzip/**/*', 'node_modules/tar.gz/**/*'
-				], {base: '.'})
-        	   .pipe(gulp.dest('packages/vfe-site-release'))
-        	   .pipe(tar('vfe-site_' + dateFormat(new Date, "yyyy-mm-dd-HH-MM") + '.tar', {
-        	   		mode: 511
-        	   }))
-        	   .pipe(gzip())
-        	   .pipe(gulp.dest('packages'))
+gulp.task('deploy', function () {
+	gulp.start('release', function () {
+		vdeploy(require('./vfe.config.js'), function (err) {
+			err && console.log(err)
+		})
+	})
 })
-
 
 /**
  * Components build handler

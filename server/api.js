@@ -12,7 +12,6 @@ var COMPACT_INTER = 20*1000
 
 appdb.persistence.setAutocompactionInterval(COMPACT_INTER)
 classdb.persistence.setAutocompactionInterval(COMPACT_INTER)
-// classdb.ensureIndex({fieldName: '_app_id'})
 
 function resp(err, data, code) {
 	if (err) return {error: err, code: code || 500}

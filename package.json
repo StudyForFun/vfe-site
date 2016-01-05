@@ -14,6 +14,7 @@
     "gulp-tar": "^1.4.0",
     "gulp-watch": "^4.3.4",
     "vfe": "^1.2.0",
+    "vfe-deploy": "^2.0.0",
     "webpack": "^1.10.5"
   },
   "dependencies": {
